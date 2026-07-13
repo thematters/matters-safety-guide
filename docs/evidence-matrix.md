@@ -32,7 +32,7 @@
 
 ### Cloudflare ECH 可用性
 
-- command `dig +short HTTPS matters-safety-guide.pages.dev`　HTTPS/SVCB 記錄含 ech 參數
+- command `curl -sS 'https://dns.google/resolve?name=matters-safety-guide.pages.dev&type=HTTPS' | jq -r '.Answer[].data'`　HTTPS/SVCB 記錄含 ech 參數
 
 主要連結　https://developers.cloudflare.com/ssl/edge-certificates/ech/
 

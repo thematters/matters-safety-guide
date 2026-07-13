@@ -59,7 +59,7 @@
       "checks": [
         {
           "kind": "command",
-          "reference": "dig +short HTTPS matters-safety-guide.pages.dev",
+          "reference": "curl -sS 'https://dns.google/resolve?name=matters-safety-guide.pages.dev&type=HTTPS' | jq -r '.Answer[].data'",
           "summary": "HTTPS/SVCB 記錄含 ech 參數"
         }
       ]
