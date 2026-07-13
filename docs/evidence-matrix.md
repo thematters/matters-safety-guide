@@ -26,9 +26,9 @@
 
 ### 無應用層分析追蹤
 
-- repo `matters-safety-guide@204b298`　原始碼、dependency 與 dist network audit
+- repo `matters-safety-guide@fafbf74e2bcc465f5088570a15e60c06e8814ad8`　原始碼、dependency 與 dist network audit
 
-主要連結　https://github.com/thematters/matters-safety-guide/tree/204b298
+主要連結　https://github.com/thematters/matters-safety-guide/tree/fafbf74e2bcc465f5088570a15e60c06e8814ad8
 
 ### Cloudflare ECH 可用性
 

@@ -36,11 +36,11 @@
       "evidence": "本 repo 原始碼、依賴與正式 build 產物未載入分析、廣告或追蹤服務",
       "limit": "Cloudflare 仍可能為傳輸、安全與防濫用處理一般請求中繼資料。",
       "owner": "Guide maintainer",
-      "href": "https://github.com/thematters/matters-safety-guide/tree/204b298",
+      "href": "https://github.com/thematters/matters-safety-guide/tree/fafbf74e2bcc465f5088570a15e60c06e8814ad8",
       "checks": [
         {
           "kind": "repo",
-          "reference": "matters-safety-guide@204b298",
+          "reference": "matters-safety-guide@fafbf74e2bcc465f5088570a15e60c06e8814ad8",
           "summary": "原始碼、dependency 與 dist network audit"
         }
       ]
