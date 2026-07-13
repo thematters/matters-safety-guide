@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://safety.matters.town/sitemap-index.xml
-
+Sitemap: https://matters-safety-guide.pages.dev/sitemap-index.xml
