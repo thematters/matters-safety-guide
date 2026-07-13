@@ -2,90 +2,95 @@
 
 ## Decision
 
-- Evaluation date: 2026-07-13
-- Risk tier: Full
-- Candidate branch: `develop`
-- Recommendation: Ready for production promotion
-- Current lifecycle state: staging verified
-- Production state: pending `develop` → `main` approval and deployment
+- Evaluation date　2026-07-14
+- Risk tier　Full
+- Candidate branch　`develop`
+- Candidate commit　`8947b90b77f4ffc9de366e6de93205c1e033af02`
+- Recommendation　Ready for production promotion
+- Current lifecycle state　staging verified
+- Production state　pending `develop` to `main` promotion and deployment
 
 ## Scope evaluated
 
-- Approved product SPEC and design handoff
-- Research content and external source links
-- Hero, ScrollTrigger trace story and dashboard animation
-- Scenario-based non-persistent action plan
-- Evidence dashboard and limitation language
-- Security headers and privacy disclosure
-- SEO, sitemap, security.txt and social metadata
-- Build, unit coverage, e2e, dependency and deployed smoke checks
+- Approved product SPEC、design handoff、reference board
+- Four-stage finalization for accessibility、mobile UX、research evidence、policy alignment and maintenance automation
+- Hero、ScrollTrigger trace story and Dashboard animation
+- Scenario-based non-persistent action plan with copy and print
+- Security headers、privacy disclosure、SEO、sitemap、security.txt、llms.txt
+- Build、unit coverage、e2e、dependency、dead-link and deployed smoke checks
 
 ## Requirements traceability
 
 | Requirement | Evidence | Result |
 | --- | --- | --- |
-| Design approved before code | `docs/spec.md`, `docs/design-handoff.md`, commit `1fe7fa7` precedes implementation commit | Pass |
-| Avoid AI SaaS visual template | `docs/reference-board.md`, `docs/design-system-conformance.md`, desktop/mobile screenshots | Pass |
-| GSAP Hero | one-time timeline, SVG route reveal, no loop | Pass |
-| ScrollTrigger story | desktop pin and trace synchronization, mobile natural flow | Pass |
-| Dashboard animation | real evidence counts only, one-time count and bar reveal | Pass |
-| Reduced motion | no pin, scrub, count-up or stagger | Pass |
+| Design approved before code | `docs/spec.md`、`docs/design-handoff.md`、`docs/reference-board.md` | Pass |
+| Avoid AI SaaS visual template | editorial guide、trace map and evidence desk visual QA | Pass |
+| GSAP Hero | H1 immediately visible；supporting copy and SVG reveal once | Pass |
+| ScrollTrigger story | desktop pin and trace synchronization；mobile natural flow | Pass |
+| Dashboard animation | real evidence counts；screen reader and no-JS values remain truthful | Pass |
+| Reduced motion | no pin、scrub、count-up or stagger | Pass |
 | No false safety score | action wording and Playwright assertion | Pass |
-| No persistence or analytics | source inspection and browser storage/cookie assertions | Pass |
-| Research links resolve | EFF, CPJ, Access Now, Amnesty, CISA and Matters links returned HTTP 200 | Pass |
+| No persistence or analytics | source inspection and browser storage／cookie assertions | Pass |
+| Research evidence | claim-level links、20 external link checks、account controls matrix | Pass |
+| Evidence maintenance | single JSON source、90-day expiry、weekly dead-link workflow | Pass |
 | Security review | `docs/security-review.md` | Pass |
-| Design-system conformance | `docs/design-system-conformance.md` | Pass with documented exceptions |
 | Performance and accessibility | `docs/quality-report.md` | Pass |
 
 ## Test evidence
 
 ### Local production build
 
-- `npm audit`: 0 vulnerabilities
-- `npm run check`: 0 errors, 0 warnings
-- `npm run test:coverage`: 7 pass, 100% core logic coverage
-- `npm run build`: pass
-- `npm run test:e2e`: 8 pass across desktop and mobile
-- Lighthouse mobile: 99 Performance, 100 Accessibility, 100 Best Practices, 100 SEO
-- LCP 1.5 s, TBT 0 ms, CLS 0
+- `npm audit`　0 vulnerabilities
+- `npm run check`　0 errors、0 warnings、0 hints
+- `npm run test:coverage`　9 pass、100% core logic coverage
+- `npm run build`　pass
+- `npm run links:check`　12 internal targets and 20 external links pass
+- `npm run test:e2e`　17 pass、1 desktop skip for a mobile-only case
+- Lighthouse mobile and desktop　Accessibility 100、Best Practices 100、SEO 100、Agentic Browsing 100
+- Mobile Slow 4G plus 4x CPU　LCP 1.368 s、CLS 0
+- Desktop unthrottled　LCP 172 ms、CLS 0
 
-### Remote CI
+### Remote CI and Codecov
 
-- PR #1 feature → develop: CI pass, `codecov/project` pass
-- PR #2 deploy config → develop: CI pass, `codecov/project` pass, `codecov/patch` pass
+- PR #11 feature to develop　two CI runs pass
+- Codecov upload for commit `2d286b2` completed successfully
+- Core logic statements、branches、functions and lines　100%
 
 ### Staging deployment
 
-- Environment: Cloudflare Pages Preview
-- Branch: `develop`
-- Deployment ID: `d45e9711-5fd4-42ab-8b84-89278ccbbfc3`
-- Immutable URL: <https://d45e9711.matters-safety-guide.pages.dev>
-- Alias: <https://develop.matters-safety-guide.pages.dev>
-- Deployed smoke tests: 8 pass across desktop and mobile
-- Response: HTTP 200
-- Preview indexing: `X-Robots-Tag: noindex`
-- Verified headers: CSP, HSTS, Referrer-Policy, X-Content-Type-Options, X-Frame-Options, Permissions-Policy, COOP, CORP
+- Environment　Cloudflare Pages Preview
+- Branch　`develop`
+- Source commit　`8947b90`
+- Deployment ID　`0d830eae-83cd-46fb-bc27-97a5cbcf071c`
+- Immutable URL　<https://0d830eae.matters-safety-guide.pages.dev>
+- Alias　<https://develop.matters-safety-guide.pages.dev>
+- Deployed smoke tests　17 pass across desktop and mobile
+- Response　HTTP 200
+- Preview indexing　`X-Robots-Tag: noindex`
+- Verified headers　CSP、HSTS、Referrer-Policy、X-Content-Type-Options、X-Frame-Options、Permissions-Policy、COOP、CORP
+- `llms.txt`　HTTP 200 and plain text
 
 ## Claims and evidence review
 
-三項目前標為已驗證的措施有可重現依據，包括 HTTPS、本站無應用層分析與 Pages 網址 ECH 設定。IPFS 與帳號控制沒有足夠逐項證據，因此維持待補證據。化名與個資政策維持政策處理中，等待 NCC 條款批次更新。
+三項已驗證措施都有可重現依據，包括 HTTPS、本站無應用層分析與 Pages 網址 ECH 設定。去中心化發布範圍維持待補證據，沒有把公開 IPFS 說明推論成每一類內容的目前行為。
 
-指南只說明化名可降低部分關聯風險，並明示化名不能用來冒充他人。服務條款連結已修正為目前可用的 `/tos`。
+帳號登入、email OTP、密碼重設與安全 cookie 已取得 `matters-web`、`matters-server` commit 證據。2FA、工作階段檢視與撤銷、密碼重設後撤銷既有工作階段仍沒有足夠證據，因此整項維持待補證據。
+
+化名與個資政策維持政策處理中。`docs/policy-alignment.md` 是預備納入 NCC 條款批次的隱私優先需求，不取代現行條款。
 
 ## Rollback plan
 
-Cloudflare Pages 保留既有 production deployments。若 production smoke test 失敗，立即在 Pages 介面或 API rollback 至部署 `66f8697e-0448-442c-b4fc-c3981d72481a`，並停止 custom-domain promotion。Git 端保留 main merge commit，可由新的 revert PR 回復。
+Cloudflare Pages 保留既有 production deployments。若 production smoke test 失敗，回復到部署 `1e1348de-cf9e-4e64-9784-a28625c182be`，並停止 custom-domain promotion。Git 端由新的 revert PR 回復 main merge commit。
 
 ## Known follow-up
 
-以下項目不阻擋本次指南上線，但必須維持公開狀態，不得改寫成已完成。
+以下項目維持公開待辦，不能改寫成已完成。
 
-1. 由 product／infra 補上 IPFS 發布範圍與 commit 證據
-2. 由 matters-web／matters-server 補上帳號安全控制矩陣
-3. NCC 條款批次確認化名、個資、金流與保存語言
-4. `safety.matters.town` 自訂網域尚未綁定，production deployment 後另行驗證 DNS 與憑證
+1. 由 product 確認目前去中心化發布、保存與撤除範圍
+2. 補上 2FA、工作階段檢視與撤銷、密碼重設後撤銷既有工作階段
+3. NCC 條款批次確認化名、個資、金流、跨境與保存語言
+4. `safety.matters.town` 已加到 Pages 專案，但 verification 顯示 `CNAME record not set`；需完成 DNS 與憑證後再切換 canonical
 
 ## Promotion gate
 
-本 release 可從 `develop` promotion 至 `main`。promotion PR 必須保持 CI 與 Codecov 綠燈。合併後以 main branch 執行 production deployment，再對 `matters-safety-guide.pages.dev` 與自訂網域執行 smoke、headers、canonical、sitemap 與 robots 驗證。
-
+本 release 可從 `develop` promotion 至 `main`。promotion PR 必須保持 CI 與 Codecov 綠燈。合併後以 main branch 執行 production deployment，再對 `matters-safety-guide.pages.dev` 執行 smoke、headers、canonical、sitemap、robots、security.txt 與 llms.txt 驗證。
