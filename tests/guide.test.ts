@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { actionTasks, evidenceItems, researchReferenceById } from '../src/data/content'
 import { countCompleted, filterTasks, groupTasks, statusCounts } from '../src/lib/guide'
 
 const tasks = [
@@ -54,3 +55,19 @@ describe('statusCounts', () => {
   })
 })
 
+describe('maintained evidence and research references', () => {
+  it('keeps every task source resolvable', () => {
+    const missing = actionTasks.flatMap(({ id, sourceIds }) =>
+      sourceIds.filter((sourceId) => !researchReferenceById.has(sourceId)).map((sourceId) => `${id}:${sourceId}`)
+    )
+    expect(missing).toEqual([])
+  })
+
+  it('requires checks, owners and current expiry dates for every evidence item', () => {
+    for (const item of evidenceItems) {
+      expect(item.owner).toBeTruthy()
+      expect(item.checks.length).toBeGreaterThan(0)
+      expect(item.expiresAt >= '2026-07-14').toBe(true)
+    }
+  })
+})

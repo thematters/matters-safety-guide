@@ -3,7 +3,7 @@
 ## Review metadata
 
 - Project: Matters 安全指南
-- Review date: 2026-07-13
+- Review date: 2026-07-14
 - Reviewer: Codex under project owner authorization
 - Risk tier: Full
 - Scope: static Astro site, client-side interactions, Cloudflare Pages configuration, CI dependencies
@@ -11,7 +11,7 @@
 
 ## System and data flow
 
-本站是預先建置的靜態網站。瀏覽器只向同一來源取得 HTML、CSS、JavaScript、SVG、sitemap 與安全文件。使用者可在頁面內選擇情境與勾選任務，狀態只存在目前頁面的 JavaScript 記憶體，重新整理後清空。
+本站是預先建置的靜態網站。瀏覽器只向同一來源取得 HTML、CSS、JavaScript、SVG、sitemap 與安全文件。使用者可在頁面內選擇情境與勾選任務，狀態只存在目前頁面的 JavaScript 記憶體，重新整理後清空。使用者可主動把清單複製到裝置剪貼簿或交由瀏覽器列印，網站不會接收結果。
 
 沒有帳號、API、表單提交、資料庫、cookie、分析服務、遠端字型或第三方執行程式碼。使用者點擊外部研究來源時，瀏覽器才會離開本站前往對應網站。
 
@@ -25,7 +25,7 @@ Cloudflare Pages／CDN 仍可能為內容傳輸、可靠性、安全與防濫用
 | Clickjacking | 公開資訊頁可被第三方 iframe | CSP `frame-ancestors 'none'` 與 `X-Frame-Options: DENY` | 舊客戶端可能只支援其中一種標頭，已雙重設定 |
 | Referrer leakage | 外部研究連結可能收到來源資訊 | `strict-origin-when-cross-origin`，新分頁連結含 `noopener noreferrer` | 使用者主動前往外部網站後受該站政策約束 |
 | Browser capability abuse | 靜態頁無需相機、麥克風、位置或付款 | Permissions-Policy 全部停用 | 瀏覽器或平台層漏洞不在本站控制範圍 |
-| Data persistence | 清單可能洩露使用者風險情境 | 不使用 localStorage、sessionStorage、cookie、IndexedDB 或後端 | 目前頁面與裝置畫面仍可能被旁觀者看見 |
+| Data persistence | 清單可能洩露使用者風險情境 | 不使用 localStorage、sessionStorage、cookie、IndexedDB 或後端 | 頁面、剪貼簿、列印結果與裝置畫面仍可能被旁觀者看見 |
 | Third-party tracking | 外部 SDK、字型或分析可建立跨站足跡 | 首次載入只允許 same-origin，`connect-src 'none'` | 使用者點擊外部連結後另計 |
 | Supply-chain compromise | Astro、GSAP、Playwright、Vitest 等 npm dependency | lockfile、Dependabot-ready、`npm audit`、CI 重建 | lockfile 仍需定期更新與審查 |
 | Misleading safety claims | 安全內容可能造成錯誤安心 | 移除分數、狀態分級、公開限制與 evidence matrix | 內容會隨產品與威脅改變，需要維護者定期複核 |
@@ -60,7 +60,7 @@ Cloudflare Pages／CDN 仍可能為內容傳輸、可靠性、安全與防濫用
 
 ## Dependency review
 
-- 2026-07-13 執行 `npm audit`
+- 2026-07-14 執行 `npm audit`
 - 結果：0 vulnerabilities
 - Astro 升級至 7.0.7，避開舊版已公告的 XSS 與 SSRF 問題
 - GSAP 3.15.0 只從 npm bundle 載入，不使用 CDN script
@@ -83,11 +83,10 @@ Cloudflare Pages／CDN 仍可能為內容傳輸、可靠性、安全與防濫用
 ### Follow-up
 
 1. IPFS 發布範圍仍需產品團隊提供 commit 與流程證據
-2. 帳號安全控制仍需 matters-web、matters-server 與產品設定頁逐項查核
+2. 帳號登入、重設密碼與 cookie 已有 repo 證據，2FA、工作階段檢視、撤銷與密碼重設後失效仍待產品補齊
 3. 化名與個資政策等待 NCC 條款批次更新
-4. 正式網域上線後每季重新驗證 headers、ECH、連結與 dependency
+4. 正式網域上線後每季重新驗證 headers、ECH、連結與 dependency；證據到期與死鏈已由每週 workflow 自動檢查
 
 ## Gate decision
 
 本地安全審查通過。只有在遠端 CI、Codecov 與正式部署 headers 全部通過後，release evaluation 才能標記 Done。
-

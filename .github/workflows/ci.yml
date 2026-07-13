@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, develop, codex/safety-guide-productization]
+    branches: [main, develop, "codex/**"]
   pull_request:
     branches: [main, develop]
 
@@ -21,6 +21,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run evidence:check
       - run: npm run check
       - run: npm run test:coverage
       - uses: codecov/codecov-action@v5
@@ -29,5 +30,6 @@ jobs:
           files: ./coverage/lcov.info
           fail_ci_if_error: true
       - run: npm run build
+      - run: npm run links:check
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
