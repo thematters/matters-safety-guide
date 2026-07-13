@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Matters 安全指南</title>
+  <desc id="desc">先看見足跡，再決定怎麼行動</desc>
+  <rect width="1200" height="630" fill="#faf7f0"/>
+  <path d="M0 0h1200v18H0z" fill="#7258ff"/>
+  <path d="M0 612h1200v18H0z" fill="#c3f432"/>
+  <g fill="none" stroke="#b3b3b3" stroke-dasharray="3 9">
+    <circle cx="905" cy="315" r="230"/>
+    <circle cx="905" cy="315" r="150"/>
+    <path d="M675 315h460M905 85v460"/>
+  </g>
+  <g fill="none" stroke="#7258ff" stroke-width="9" stroke-linecap="round">
+    <path d="M905 315L760 168"/>
+    <path d="M905 315L1054 166" stroke-dasharray="14 14"/>
+    <path d="M905 315L762 472"/>
+    <path d="M905 315L1050 470" stroke-dasharray="14 14"/>
+  </g>
+  <g fill="#c3f432" stroke="#000" stroke-width="3">
+    <circle cx="760" cy="168" r="28"/><circle cx="1054" cy="166" r="28"/>
+    <circle cx="762" cy="472" r="28"/><circle cx="1050" cy="470" r="28"/>
+  </g>
+  <circle cx="905" cy="315" r="54" fill="#000"/>
+  <circle cx="905" cy="315" r="34" fill="none" stroke="#c3f432" stroke-width="3"/>
+  <g fill="#000" font-family="system-ui, sans-serif">
+    <text x="72" y="95" font-size="22" font-weight="700" letter-spacing="3">MATTERS FIELD GUIDE · 001</text>
+    <text x="72" y="236" font-size="92" font-weight="600">先看見足跡，</text>
+    <text x="72" y="346" font-size="92" font-weight="600" fill="#7258ff">再決定怎麼行動</text>
+    <text x="72" y="456" font-size="28">隱私、安全與抗審查的情境式行動指南</text>
+    <text x="72" y="548" font-size="20" font-weight="600">safety.matters.town</text>
+  </g>
+</svg>
+

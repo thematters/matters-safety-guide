@@ -1,0 +1,66 @@
+---
+interface Props {
+  context: 'hero' | 'story'
+}
+
+const { context } = Astro.props
+---
+
+<div
+  class:list={['footprint-map', `footprint-map--${context}`]}
+  data-footprint-map={context}
+  role="img"
+  aria-label="閱讀、互動、發布與金流四條數位足跡，都可能經由裝置、網路與服務連回使用者"
+>
+  <svg viewBox="0 0 620 620" aria-hidden="true">
+    <g class="map-grid">
+      <circle cx="310" cy="310" r="250"></circle>
+      <circle cx="310" cy="310" r="178"></circle>
+      <circle cx="310" cy="310" r="104"></circle>
+      <path d="M60 310H560M310 60V560"></path>
+      <path d="M133 133L487 487M487 133L133 487"></path>
+    </g>
+
+    <g class="map-routes">
+      <path class="map-route map-route--read" data-route="read" d="M310 310C245 274 190 220 130 128"></path>
+      <path class="map-route map-route--participate" data-route="participate" d="M310 310C382 266 438 218 494 142"></path>
+      <path class="map-route map-route--publish" data-route="publish" d="M310 310C250 375 210 430 148 500"></path>
+      <path class="map-route map-route--money" data-route="money" d="M310 310C376 370 424 430 492 496"></path>
+    </g>
+
+    <g class="map-node map-node--center" data-node="center" transform="translate(310 310)">
+      <circle r="54"></circle>
+      <circle class="map-node__inner" r="35"></circle>
+      <text text-anchor="middle" y="5">MATTERS</text>
+    </g>
+
+    <g class="map-node" data-node="read" transform="translate(130 128)">
+      <circle r="42"></circle>
+      <text text-anchor="middle" y="5">閱讀</text>
+    </g>
+    <g class="map-node" data-node="participate" transform="translate(494 142)">
+      <circle r="42"></circle>
+      <text text-anchor="middle" y="5">互動</text>
+    </g>
+    <g class="map-node" data-node="publish" transform="translate(148 500)">
+      <circle r="42"></circle>
+      <text text-anchor="middle" y="5">發布</text>
+    </g>
+    <g class="map-node" data-node="money" transform="translate(492 496)">
+      <circle r="42"></circle>
+      <text text-anchor="middle" y="5">金流</text>
+    </g>
+
+    <g class="map-coordinate" aria-hidden="true">
+      <text x="68" y="294">TRACE / 01</text>
+      <text x="460" y="294">RISK MAP</text>
+      <text x="326" y="76">VISIBLE</text>
+      <text x="326" y="550">CONTEXTUAL</text>
+    </g>
+  </svg>
+  <div class="map-legend" aria-hidden="true">
+    <span><i class="legend-line legend-line--solid"></i>可能直接辨識</span>
+    <span><i class="legend-line legend-line--dash"></i>可與其他線索拼接</span>
+  </div>
+</div>
+

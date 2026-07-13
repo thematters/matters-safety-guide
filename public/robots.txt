@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://safety.matters.town/sitemap-index.xml
+
