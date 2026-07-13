@@ -6,6 +6,7 @@ import {
   evidenceItems,
   knowledgeTopics,
   priorityLabels,
+  researchReferenceById,
   scenarios,
   sources,
 } from '../data/content'
@@ -30,6 +31,19 @@ const description =
       <a href="#evidence">平台措施</a>
       <a href="#emergency">急迫事件</a>
     </nav>
+    <div class="mobile-header-actions">
+      <a class="mobile-emergency-link" href="#emergency">急迫事件</a>
+      <details class="mobile-menu" data-mobile-menu>
+        <summary>目錄</summary>
+        <nav aria-label="行動版主要導覽">
+          <a href="#trace">數位足跡</a>
+          <a href="#plan">行動清單</a>
+          <a href="#evidence">平台措施</a>
+          <a href="#emergency">急迫事件</a>
+          <a href="#sources">研究來源</a>
+        </nav>
+      </details>
+    </div>
     <a class="header-meta" href="#about">2026.07<br />第一版</a>
   </header>
 
@@ -37,7 +51,7 @@ const description =
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero__copy">
         <p class="eyebrow" data-hero-item>MATTERS FIELD GUIDE · 001</p>
-        <h1 id="hero-title" data-hero-item>
+        <h1 id="hero-title">
           先看見<br />足跡，<br /><span>再決定怎麼行動</span>
         </h1>
         <p class="hero__lead" data-hero-item>
@@ -135,7 +149,7 @@ const description =
           <p class="eyebrow">YOUR FIELD NOTES</p>
           <h2 id="plan-title">建立你的行動清單</h2>
         </div>
-        <p>清單只在目前頁面運作，不會保存或傳送。完成幾項不代表「已安全」，它只幫你記住下一步。</p>
+        <p>清單只在目前頁面運作，不會保存或傳送。你可以在裝置上複製或列印結果。完成幾項不代表「已安全」。</p>
       </header>
 
       <div class="scenario-picker" aria-labelledby="scenario-picker-title">
@@ -154,7 +168,11 @@ const description =
 
       <div class="plan-status" aria-live="polite">
         <p data-plan-summary>目前顯示完整清單，共 {actionTasks.length} 項</p>
-        <button type="button" class="plan-reset" data-plan-reset>清除選擇與勾選</button>
+        <div class="plan-tools" aria-label="清單工具">
+          <button type="button" class="plan-reset" data-plan-reset>清除選擇與勾選</button>
+          <button type="button" class="ds-btn ds-btn--secondary ds-btn--medium" data-plan-copy>複製我的清單</button>
+          <button type="button" class="ds-btn ds-btn--secondary ds-btn--medium" data-plan-print>列印</button>
+        </div>
       </div>
 
       <div class="task-columns">
@@ -169,20 +187,34 @@ const description =
             </header>
             <div class="task-list">
               {taskGroups[priority as keyof typeof taskGroups].map((task) => (
-                <label
+                <article
                   class="task-card"
                   data-task-card
                   data-task-id={task.id}
                   data-scenarios={task.scenarios.join(',')}
                 >
-                  <input type="checkbox" data-task-checkbox />
-                  <span class="task-card__check" aria-hidden="true"></span>
-                  <span class="task-card__body">
-                    <strong>{task.title}</strong>
-                    <span>{task.detail}</span>
-                    {task.source && <small>依據 {task.source}</small>}
-                  </span>
-                </label>
+                  <label class="task-card__toggle">
+                    <input type="checkbox" data-task-checkbox />
+                    <span class="task-card__check" aria-hidden="true"></span>
+                    <span class="task-card__body">
+                      <strong>{task.title}</strong>
+                      <span>{task.detail}</span>
+                    </span>
+                  </label>
+                  <small class="task-card__sources">
+                    依據{' '}
+                    {task.sourceIds.map((sourceId, sourceIndex) => {
+                      const source = researchReferenceById.get(sourceId)
+                      if (!source) return null
+                      return (
+                        <>
+                          {sourceIndex > 0 && '、'}
+                          <a href={source.href} target="_blank" rel="noopener noreferrer">{source.shortName}</a>
+                        </>
+                      )
+                    })}
+                  </small>
+                </article>
               ))}
             </div>
           </section>
@@ -222,17 +254,26 @@ const description =
       <div class="dashboard-summary" aria-label="證據狀態總覽">
         <article>
           <p><span class="status-shape status-shape--verified"></span>已驗證</p>
-          <strong data-count={evidenceCounts.verified}>0</strong>
+          <strong>
+            <span class="sr-only">{evidenceCounts.verified} 項</span>
+            <span aria-hidden="true" data-count={evidenceCounts.verified}>{evidenceCounts.verified}</span>
+          </strong>
           <span>項公開或可重現證據</span>
         </article>
         <article>
           <p><span class="status-shape status-shape--pending"></span>待補證據</p>
-          <strong data-count={evidenceCounts.pending}>0</strong>
+          <strong>
+            <span class="sr-only">{evidenceCounts.pending} 項</span>
+            <span aria-hidden="true" data-count={evidenceCounts.pending}>{evidenceCounts.pending}</span>
+          </strong>
           <span>項需要產品團隊確認</span>
         </article>
         <article>
           <p><span class="status-shape status-shape--policy"></span>政策處理中</p>
-          <strong data-count={evidenceCounts.policy}>0</strong>
+          <strong>
+            <span class="sr-only">{evidenceCounts.policy} 項</span>
+            <span aria-hidden="true" data-count={evidenceCounts.policy}>{evidenceCounts.policy}</span>
+          </strong>
           <span>項等待條款與治理更新</span>
         </article>
         <div class="dashboard-bar" aria-hidden="true">
@@ -257,6 +298,7 @@ const description =
                 <div><dt>證據</dt><dd>{item.evidence}</dd></div>
                 <div><dt>限制</dt><dd>{item.limit}</dd></div>
                 <div><dt>最後驗證</dt><dd>{item.verifiedAt}</dd></div>
+                <div><dt>負責方</dt><dd>{item.owner}</dd></div>
               </dl>
             </div>
             {item.href ? (
@@ -316,7 +358,10 @@ const description =
         </details>
       </div>
       <div class="incident-help">
-        <p>高風險民間社會、人權工作者、記者與媒體可聯絡</p>
+        <div>
+          <p>帳號與平台問題可先聯絡 Matters 產品支援。高風險個案可尋求外部數位安全協助。</p>
+          <a href="mailto:ask@matters.town">ask@matters.town</a>
+        </div>
         <a class="ds-btn ds-btn--primary ds-btn--large" href="https://www.accessnow.org/help/" target="_blank" rel="noopener noreferrer">Access Now 24/7 數位安全熱線 ↗</a>
       </div>
     </section>
@@ -348,7 +393,7 @@ const description =
       <h2>保護從誠實說明限制開始</h2>
     </div>
     <div class="footer-meta">
-      <p>版本 1.0<br />最後驗證 2026-07-13<br />維護者 Matters</p>
+      <p>版本 1.1<br />最後驗證 2026-07-14<br />維護者 Matters</p>
       <p>本站不使用應用層分析、不設 cookie，也不保存你的清單。Cloudflare 仍可能處理一般請求中繼資料。</p>
       <nav aria-label="頁尾連結">
         <a href="https://matters.town/tos" target="_blank" rel="noopener noreferrer">服務條款 ↗</a>

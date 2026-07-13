@@ -1,4 +1,5 @@
 import type { GuideTask, ScenarioId } from '../lib/guide'
+import evidenceData from './evidence.json'
 
 export interface Scenario {
   id: ScenarioId
@@ -39,7 +40,7 @@ export const scenarios: Scenario[] = [
     summary:
       '照片位置、文件作者、修改紀錄、引用細節與發布時間都可能暴露來源。內容被轉貼或保存後，刪除原文通常無法收回所有副本。',
     traces: ['EXIF 與檔案屬性', '草稿與修改紀錄', '內容可被長期保存'],
-    actions: ['上傳前移除照片與文件中繼資料', '高風險內容先做來源與細節檢查', '把可撤回性納入 IPFS 發布判斷'],
+    actions: ['上傳前移除照片與文件中繼資料', '高風險內容先做來源與細節檢查', '先確認內容會被發布到哪些保存系統'],
   },
   {
     id: 'money',
@@ -53,10 +54,95 @@ export const scenarios: Scenario[] = [
   },
 ]
 
+export interface ResearchReference {
+  id: string
+  name: string
+  shortName: string
+  scope: string
+  href: string
+}
+
+export const researchReferences: ResearchReference[] = [
+  {
+    id: 'cisa-basics',
+    name: 'CISA 4 Easy Ways to Stay Safe Online',
+    shortName: 'CISA 密碼與帳號基礎',
+    scope: '獨立密碼、密碼管理器、多因素驗證、更新與釣魚',
+    href: 'https://www.cisa.gov/sites/default/files/2024-09/Secure-Our-World-4-Easy-Ways-Stay-Safe-Online-Tip-Sheet.pdf',
+  },
+  {
+    id: 'eff-security-plan',
+    name: 'EFF Your Security Plan',
+    shortName: 'EFF 威脅建模',
+    scope: '資產、對手、後果、發生可能性、可接受代價與可求助對象',
+    href: 'https://ssd.eff.org/module/your-security-plan',
+  },
+  {
+    id: 'eff-phishing',
+    name: 'EFF How to Avoid Phishing Attacks',
+    shortName: 'EFF 釣魚防護',
+    scope: '辨識連結、附件、登入要求與第二管道確認',
+    href: 'https://ssd.eff.org/module/how-avoid-phishing-attacks',
+  },
+  {
+    id: 'eff-footprint',
+    name: 'EFF How to Manage Your Digital Footprint',
+    shortName: 'EFF 數位足跡',
+    scope: '盤點公開資訊、帳號關聯與不同身分之間的可連結線索',
+    href: 'https://ssd.eff.org/module/how-to-manage-your-digital-footprint',
+  },
+  {
+    id: 'eff-vpn',
+    name: 'EFF Choosing the VPN That Is Right for You',
+    shortName: 'EFF VPN 指南',
+    scope: 'VPN 能保護的連線範圍、信任轉移與限制',
+    href: 'https://ssd.eff.org/module/choosing-vpn-thats-right-you',
+  },
+  {
+    id: 'cpj-kit',
+    name: 'CPJ Digital Safety Kit',
+    shortName: 'CPJ 數位安全指南',
+    scope: '帳號、裝置、素材、備份、通訊中繼資料與事件準備',
+    href: 'https://cpj.org/2019/07/digital-safety-kit-journalists/',
+  },
+  {
+    id: 'cpj-device',
+    name: 'CPJ Device Security Checklist',
+    shortName: 'CPJ 裝置安全清單',
+    scope: '系統更新、磁碟加密、PIN、生物辨識、備份與間諜軟體風險',
+    href: 'https://cpj.org/wp-content/uploads/2019/07/ERT-Device-Security-Checklist-2.pdf',
+  },
+  {
+    id: 'access-now-help',
+    name: 'Access Now Digital Security Helpline',
+    shortName: 'Access Now 數位安全熱線',
+    scope: '高風險民間社會、人權工作者與記者的事件支援',
+    href: 'https://www.accessnow.org/help/',
+  },
+  {
+    id: 'amnesty-help',
+    name: 'Amnesty International Security Lab Get Help',
+    shortName: 'Amnesty 數位鑑識支援',
+    scope: '高風險民間社會的間諜軟體與裝置鑑識支援範圍',
+    href: 'https://securitylab.amnesty.org/get-help/',
+  },
+  {
+    id: 'matters-tos',
+    name: 'Matters Terms and Privacy Policy',
+    shortName: 'Matters 條款與隱私政策',
+    scope: '帳號資訊、付款、第三方登入、跨境處理、冒充限制與 Vault 保存限制',
+    href: 'https://matters.town/tos',
+  },
+]
+
+export const researchReferenceById = new Map(
+  researchReferences.map((reference) => [reference.id, reference])
+)
+
 export interface ActionTask extends GuideTask {
   title: string
   detail: string
-  source?: string
+  sourceIds: string[]
 }
 
 export const actionTasks: ActionTask[] = [
@@ -66,7 +152,7 @@ export const actionTasks: ActionTask[] = [
     priority: 'now',
     title: '使用獨立且高強度的密碼',
     detail: '用可信任的密碼管理器產生並保存，避免與信箱、社群或工作帳號共用。',
-    source: 'CISA',
+    sourceIds: ['cisa-basics'],
   },
   {
     id: 'secure-email',
@@ -74,7 +160,7 @@ export const actionTasks: ActionTask[] = [
     priority: 'now',
     title: '先保護註冊信箱',
     detail: '信箱往往是帳號復原的入口。檢查多因素驗證、復原信箱與登入工作階段。',
-    source: 'EFF',
+    sourceIds: ['cisa-basics', 'eff-security-plan'],
   },
   {
     id: 'separate-identity',
@@ -82,7 +168,7 @@ export const actionTasks: ActionTask[] = [
     priority: 'now',
     title: '切開化名與日常身分',
     detail: '不要重用名稱、頭像、自介、聯絡方式與公開錢包。化名不能用來冒充他人。',
-    source: 'EFF',
+    sourceIds: ['eff-footprint', 'matters-tos'],
   },
   {
     id: 'updates-lock',
@@ -90,7 +176,7 @@ export const actionTasks: ActionTask[] = [
     priority: 'now',
     title: '更新裝置並設定強鎖定',
     detail: '安裝安全更新、啟用磁碟加密，使用足夠長的密碼或 PIN，避免只依賴生物辨識。',
-    source: 'CPJ',
+    sourceIds: ['cisa-basics', 'cpj-device'],
   },
   {
     id: 'metadata',
@@ -98,7 +184,7 @@ export const actionTasks: ActionTask[] = [
     priority: 'now',
     title: '上傳前檢查中繼資料',
     detail: '移除照片位置、相機資訊、文件作者與修改紀錄，另檢查畫面本身是否透露地點或身分。',
-    source: 'CPJ',
+    sourceIds: ['cpj-kit'],
   },
   {
     id: 'phishing',
@@ -106,7 +192,7 @@ export const actionTasks: ActionTask[] = [
     priority: 'next',
     title: '建立釣魚訊息的停頓習慣',
     detail: '不要直接從訊息中的連結登入。另開瀏覽器前往已知網址，並用第二個管道確認急迫要求。',
-    source: 'EFF',
+    sourceIds: ['eff-phishing'],
   },
   {
     id: 'browser-profile',
@@ -114,7 +200,7 @@ export const actionTasks: ActionTask[] = [
     priority: 'next',
     title: '分開敏感與日常瀏覽環境',
     detail: '使用不同瀏覽器設定檔，避免同時登入會識別真實身分的服務。',
-    source: 'EFF',
+    sourceIds: ['eff-footprint'],
   },
   {
     id: 'backup',
@@ -122,7 +208,7 @@ export const actionTasks: ActionTask[] = [
     priority: 'next',
     title: '準備加密且可復原的備份',
     detail: '備份重要原稿與證據，測試能否還原，並把復原資訊與裝置分開保存。',
-    source: 'CPJ',
+    sourceIds: ['cpj-kit', 'cpj-device'],
   },
   {
     id: 'network-model',
@@ -130,7 +216,7 @@ export const actionTasks: ActionTask[] = [
     priority: 'next',
     title: '先畫出你的網路威脅模型',
     detail: 'VPN、Tor 與 HTTPS 解決不同問題。先確認你要防的是同網路旁觀、服務商、網站，或更強的對手。',
-    source: 'EFF',
+    sourceIds: ['eff-security-plan', 'eff-vpn'],
   },
   {
     id: 'payment-map',
@@ -138,7 +224,7 @@ export const actionTasks: ActionTask[] = [
     priority: 'next',
     title: '畫出付款資料會經過誰',
     detail: '列出平台、支付商、銀行或鏈上地址能看見的資訊，再決定是否接受身分連結風險。',
-    source: 'EFF',
+    sourceIds: ['eff-security-plan', 'matters-tos'],
   },
   {
     id: 'incident-plan',
@@ -146,7 +232,7 @@ export const actionTasks: ActionTask[] = [
     priority: 'next',
     title: '事前寫下事件應變順序',
     detail: '包含可信任聯絡人、帳號復原管道、證據保存方式與需要停止發布的條件。',
-    source: 'Access Now',
+    sourceIds: ['eff-security-plan', 'access-now-help'],
   },
   {
     id: 'expert-help',
@@ -154,15 +240,15 @@ export const actionTasks: ActionTask[] = [
     priority: 'help',
     title: '高風險發布或收款先找專人檢視',
     detail: '若可能面對國家級監控、跨境追查或立即人身風險，不要只靠公開清單自行判斷。',
-    source: 'Access Now',
+    sourceIds: ['access-now-help'],
   },
   {
     id: 'compromise-help',
     scenarios: ['all'],
     priority: 'help',
-    title: '發現入侵跡象時用乾淨裝置求助',
-    detail: '若裝置可能受監控，停止在原裝置改密碼或討論事件，改用可信任的其他裝置聯絡協助。',
-    source: 'Amnesty Security Lab',
+    title: '發現入侵跡象時改用可信任裝置求助',
+    detail: '若裝置可能受監控，先停止在原裝置改密碼或討論事件，再用另一部可信任裝置聯絡專業支援。',
+    sourceIds: ['access-now-help', 'amnesty-help'],
   },
 ]
 
@@ -219,69 +305,22 @@ export const knowledgeTopics = [
 
 export type EvidenceStatus = 'verified' | 'pending' | 'policy'
 
-export const evidenceItems: Array<{
+export interface EvidenceItem {
+  id: string
   title: string
   status: EvidenceStatus
   statusLabel: string
   verifiedAt: string
+  expiresAt: string
   evidence: string
   limit: string
-  href?: string
-}> = [
-  {
-    title: 'HTTPS 傳輸加密',
-    status: 'verified',
-    statusLabel: '已驗證',
-    verifiedAt: '2026-07-13',
-    evidence: '正式 Pages 網址的 TLS 連線與 redirect 檢查',
-    limit: '保護傳輸內容，不會隱藏所有連線中繼資料。',
-    href: 'https://developers.cloudflare.com/ssl/',
-  },
-  {
-    title: '無應用層分析追蹤',
-    status: 'verified',
-    statusLabel: '已驗證',
-    verifiedAt: '2026-07-13',
-    evidence: '本 repo 原始碼、dependency 與 build 產物檢查',
-    limit: 'CDN 仍可能為傳輸、安全與防濫用處理一般請求中繼資料。',
-    href: 'https://github.com/thematters/matters-safety-guide',
-  },
-  {
-    title: 'Cloudflare ECH 可用性',
-    status: 'verified',
-    statusLabel: '已驗證',
-    verifiedAt: '2026-07-13',
-    evidence: 'Pages 網址 HTTPS/SVCB 記錄含 ECH 設定',
-    limit: '需要瀏覽器、DNS 與網路環境支援，且不等於匿名。',
-    href: 'https://developers.cloudflare.com/ssl/edge-certificates/ech/',
-  },
-  {
-    title: 'IPFS 內容可攜性',
-    status: 'pending',
-    statusLabel: '待補證據',
-    verifiedAt: '2026-07-13',
-    evidence: '公開說明提及 IPFS，仍需確認目前發布流程與內容範圍',
-    limit: '去中心化保存也會提高撤除與遺忘的難度。',
-    href: 'https://matters.town/about',
-  },
-  {
-    title: '帳號安全控制',
-    status: 'pending',
-    statusLabel: '待補證據',
-    verifiedAt: '2026-07-13',
-    evidence: '需由產品設定頁、matters-web 與 matters-server 建立逐項證據',
-    limit: '本指南不能代替產品內的安全設定。',
-  },
-  {
-    title: '化名與個資政策',
-    status: 'policy',
-    statusLabel: '政策處理中',
-    verifiedAt: '2026-07-13',
-    evidence: '現行條款與預計隨 NCC 批次調整的隱私方向',
-    limit: '化名不等於冒充，也不能消除付款與操作足跡。',
-    href: 'https://matters.town/tos',
-  },
-]
+  owner: string
+  href: string
+  checks: Array<{ kind: string; reference: string; summary: string }>
+}
+
+export const evidenceMeta = evidenceData.meta
+export const evidenceItems = evidenceData.items as EvidenceItem[]
 
 export const sources = [
   {
@@ -305,8 +344,8 @@ export const sources = [
     href: 'https://securitylab.amnesty.org/',
   },
   {
-    name: 'CISA Secure Our World',
+    name: 'CISA Secure Our World Tip Sheet',
     scope: '密碼管理器、多因素驗證、更新與釣魚基礎',
-    href: 'https://www.cisa.gov/secure-our-world',
+    href: 'https://www.cisa.gov/sites/default/files/2024-09/Secure-Our-World-4-Easy-Ways-Stay-Safe-Online-Tip-Sheet.pdf',
   },
 ]

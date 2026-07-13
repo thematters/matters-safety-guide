@@ -45,22 +45,20 @@ mm.add(
       gsap.set('[data-hero-item], [data-hero-map], [data-evidence-card]', {
         clearProps: 'all',
       })
-      document.querySelectorAll<HTMLElement>('[data-count]').forEach((counter) => {
-        counter.textContent = counter.dataset.count ?? '0'
-      })
       setActiveTrace('read')
       return
     }
 
     if (motionOK) {
       const hero = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      hero.addLabel('supporting-copy')
       hero
         .from('[data-hero-item]', {
           y: 24,
-          opacity: 0,
+          autoAlpha: 0,
           duration: 0.72,
           stagger: 0.1,
-        })
+        }, 'supporting-copy')
         .from(
           '[data-footprint-map="hero"] .map-grid',
           { opacity: 0, duration: 0.6 },
@@ -102,6 +100,7 @@ mm.add(
         dashboard.querySelectorAll<HTMLElement>('[data-count]').forEach((counter) => {
           const target = Number(counter.dataset.count ?? 0)
           const state = { value: 0 }
+          counter.textContent = '0'
           dashboardTimeline.to(
             state,
             {

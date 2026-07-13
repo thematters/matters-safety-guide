@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "title": "Matters 措施證據矩陣",
+    "lastReviewed": "2026-07-14",
+    "maintainer": "Matters",
+    "canonical": "https://matters-safety-guide.pages.dev/",
+    "reviewIntervalDays": 90
+  },
+  "items": [
+    {
+      "id": "https",
+      "title": "HTTPS 傳輸加密",
+      "status": "verified",
+      "statusLabel": "已驗證",
+      "verifiedAt": "2026-07-14",
+      "expiresAt": "2026-10-12",
+      "evidence": "正式 Pages 網址回應 HTTP 200，並提供 TLS 與 HSTS",
+      "limit": "保護傳輸內容，不會隱藏所有連線中繼資料。",
+      "owner": "Matters infra",
+      "href": "https://developers.cloudflare.com/ssl/",
+      "checks": [
+        {
+          "kind": "command",
+          "reference": "curl -sSI https://matters-safety-guide.pages.dev/",
+          "summary": "HTTP 200，Strict-Transport-Security 啟用"
+        }
+      ]
+    },
+    {
+      "id": "no-app-tracking",
+      "title": "無應用層分析追蹤",
+      "status": "verified",
+      "statusLabel": "已驗證",
+      "verifiedAt": "2026-07-14",
+      "expiresAt": "2026-10-12",
+      "evidence": "本 repo 原始碼、依賴與正式 build 產物未載入分析、廣告或追蹤服務",
+      "limit": "Cloudflare 仍可能為傳輸、安全與防濫用處理一般請求中繼資料。",
+      "owner": "Guide maintainer",
+      "href": "https://github.com/thematters/matters-safety-guide/tree/204b298",
+      "checks": [
+        {
+          "kind": "repo",
+          "reference": "matters-safety-guide@204b298",
+          "summary": "原始碼、dependency 與 dist network audit"
+        }
+      ]
+    },
+    {
+      "id": "ech",
+      "title": "Cloudflare ECH 可用性",
+      "status": "verified",
+      "statusLabel": "已驗證",
+      "verifiedAt": "2026-07-14",
+      "expiresAt": "2026-10-12",
+      "evidence": "Pages 網址的 HTTPS DNS 記錄含 ECH 設定",
+      "limit": "需要瀏覽器、DNS 與網路環境支援，且不等於匿名。",
+      "owner": "Matters infra",
+      "href": "https://developers.cloudflare.com/ssl/edge-certificates/ech/",
+      "checks": [
+        {
+          "kind": "command",
+          "reference": "dig +short HTTPS matters-safety-guide.pages.dev",
+          "summary": "HTTPS/SVCB 記錄含 ech 參數"
+        }
+      ]
+    },
+    {
+      "id": "decentralized-publishing",
+      "title": "去中心化發布與保存範圍",
+      "status": "pending",
+      "statusLabel": "待補證據",
+      "verifiedAt": "2026-07-14",
+      "expiresAt": "2026-10-12",
+      "evidence": "公開說明提及 IPFS，尚待產品團隊確認目前發布流程、內容範圍與撤除邊界",
+      "limit": "公開內容也可能被第三方截圖、轉貼或保存，去中心化保存會進一步提高撤除難度。",
+      "owner": "Matters product",
+      "href": "https://matters.town/about",
+      "checks": [
+        {
+          "kind": "public-doc",
+          "reference": "https://matters.town/about",
+          "summary": "僅能支持平台使用 IPFS 的公開描述，不能證明每一類內容的目前發布行為"
+        },
+        {
+          "kind": "public-doc",
+          "reference": "https://matters.town/tos",
+          "summary": "條款提醒特定公開內容可能無法完全刪除"
+        }
+      ]
+    },
+    {
+      "id": "account-controls",
+      "title": "帳號安全控制",
+      "status": "pending",
+      "statusLabel": "待補證據",
+      "verifiedAt": "2026-07-14",
+      "expiresAt": "2026-10-12",
+      "evidence": "登入、重設密碼與安全 cookie 已取得 repo 證據；2FA、工作階段檢視與撤銷仍待補",
+      "limit": "密碼變更或重設是否撤銷既有工作階段尚未取得證據，本指南不能代替產品內的安全控制。",
+      "owner": "Matters product",
+      "href": "https://matters.town/me/settings",
+      "checks": [
+        {
+          "kind": "repo",
+          "reference": "matters-web@da0823029be55c891a933680144b0809c6d2b52a",
+          "summary": "已核對密碼設定、email 驗證與替代登入介面"
+        },
+        {
+          "kind": "repo",
+          "reference": "matters-server@95aef228bbc7313d130b0fd8fa414d7584b524b4",
+          "summary": "已核對 email OTP、密碼重設、JWT 期限與 cookie 屬性"
+        }
+      ]
+    },
+    {
+      "id": "privacy-policy",
+      "title": "化名與個資政策",
+      "status": "policy",
+      "statusLabel": "政策處理中",
+      "verifiedAt": "2026-07-14",
+      "expiresAt": "2026-10-12",
+      "evidence": "已建立隱私優先的政策對齊草案，正式文字等待 NCC 批次更新",
+      "limit": "化名不等於冒充，也不能消除付款、裝置與操作足跡；草案尚未取代現行條款。",
+      "owner": "Matters governance",
+      "href": "https://matters.town/tos",
+      "checks": [
+        {
+          "kind": "public-doc",
+          "reference": "https://matters.town/tos",
+          "summary": "已核對帳號資訊、付款、第三方登入、跨境處理、冒充與保存限制"
+        },
+        {
+          "kind": "repo-doc",
+          "reference": "docs/policy-alignment.md",
+          "summary": "待 NCC 批次採納的隱私優先需求"
+        }
+      ]
+    }
+  ]
+}

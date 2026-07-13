@@ -11,6 +11,9 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
+    "evidence:sync": "node scripts/sync-evidence.mjs",
+    "evidence:check": "node scripts/sync-evidence.mjs --check",
+    "links:check": "node scripts/check-links.mjs",
     "deploy:preview": "wrangler pages deploy dist --project-name=matters-safety-guide --branch=develop",
     "deploy:production": "wrangler pages deploy dist --project-name=matters-safety-guide --branch=main"
   },
