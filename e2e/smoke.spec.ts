@@ -53,3 +53,15 @@ test('all external new-tab links protect the opener', async ({ page }) => {
   )
   expect(unsafeLinks).toBe(0)
 })
+
+test('the CSP permits same-origin discovery files without external connections', async ({ page }) => {
+  await page.goto('/')
+
+  const response = await page.evaluate(async () => {
+    const robots = await fetch('/robots.txt')
+    return { ok: robots.ok, text: await robots.text() }
+  })
+
+  expect(response.ok).toBe(true)
+  expect(response.text).toContain('Sitemap: https://matters-safety-guide.pages.dev/sitemap-index.xml')
+})
