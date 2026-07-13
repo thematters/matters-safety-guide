@@ -61,7 +61,6 @@ Lighthouse 指出單一同源 CSS 是 render-blocking request，估計 150 ms。
 ## Remaining production checks
 
 1. Cloudflare Pages must serve `_headers` exactly as configured
-2. Production canonical and sitemap should resolve on `safety.matters.town`
+2. Production canonical and sitemap resolve on `matters-safety-guide.pages.dev`; switch them atomically after `safety.matters.town` passes DNS and certificate validation
 3. Pages deployment must be associated with the release commit
 4. Remote CI and Codecov must be green
-
