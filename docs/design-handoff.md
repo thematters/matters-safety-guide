@@ -106,11 +106,11 @@
 
 ### Hero timeline
 
-1. Eyebrow 與標題由下方 24 px 進場，opacity 0 到 1
-2. 核心警語緊接標題進場
+1. 標題隨首屏直接顯示，不設定初始 opacity 或位移
+2. Eyebrow、核心警語與動作入口由下方 24 px 一次性進場
 3. SVG 路徑由 stroke dashoffset 揭露
 4. 四個節點依序出現，中央節點最後一次性 pulse
-5. 總長不超過 1.8 秒，不循環
+5. 總長不超過 1.8 秒，不循環，動畫不能延後 LCP 標題
 
 ### ScrollTrigger
 
@@ -156,4 +156,3 @@
 - 足跡地圖、證據狀態、任務卡與 scrollytelling layout 為 standalone editorial product 的必要自製元件
 - 自製元件仍只使用專案語意 token、design-system spacing 與 typography utilities
 - 若 design-system 後續提供對應元件，應建立遷移 issue，而非永久分叉
-

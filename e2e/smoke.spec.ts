@@ -1,10 +1,13 @@
 import { expect, test } from '@playwright/test'
 
 test('renders the complete guide and primary landmarks', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/', { waitUntil: 'domcontentloaded' })
 
   await expect(page).toHaveTitle(/Matters 安全指南/)
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('先看見')
+  const heading = page.getByRole('heading', { level: 1 })
+  await expect(heading).toContainText('先看見')
+  await expect(heading).toHaveCSS('opacity', '1')
+  await expect(heading).toHaveCSS('visibility', 'visible')
   await expect(page.locator('[data-site-header]')).toBeVisible()
   await expect(page.locator('nav.site-nav')).toHaveCount(1)
   await expect(page.getByRole('heading', { name: 'Matters 措施與證據' })).toBeVisible()
@@ -20,7 +23,7 @@ test('filters tasks without assigning a safety score or persisting state', async
   await expect(page.locator('[data-plan-summary]')).toContainText('完成數不是安全分數')
 
   const firstVisibleTask = page.locator('[data-task-card]:visible').first()
-  await firstVisibleTask.click()
+  await firstVisibleTask.locator('label').click()
   await expect(page.locator('[data-plan-summary]')).toContainText('標記完成 1 項')
 
   expect(await page.evaluate(() => localStorage.length)).toBe(0)
@@ -29,6 +32,63 @@ test('filters tasks without assigning a safety score or persisting state', async
 
   await page.reload()
   await expect(page.getByRole('button', { name: /發布/ })).toHaveAttribute('aria-pressed', 'false')
+})
+
+test('dashboard counts remain truthful without JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false })
+  const page = await context.newPage()
+  await page.goto('/')
+
+  await expect(page.locator('[data-count]')).toHaveText(['3', '2', '1'])
+  await expect(page.locator('.dashboard-summary')).toContainText('已驗證')
+
+  await context.close()
+})
+
+test('mobile navigation keeps the urgent route and full menu reachable', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'mobile-only behavior')
+  await page.goto('/')
+
+  await expect(page.locator('.mobile-emergency-link')).toBeVisible()
+  await expect(page.locator('nav.site-nav')).toBeHidden()
+  await page.locator('.mobile-menu summary').click()
+  await expect(page.locator('.mobile-menu nav')).toBeVisible()
+  await page.locator('.mobile-menu nav a[href="#evidence"]').click()
+  await expect(page.locator('.mobile-menu')).not.toHaveAttribute('open', '')
+})
+
+test('copies a local checklist with sources outside the task toggle', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: {
+        writeText: async (text: string) => {
+          ;(window as typeof window & { copiedPlan?: string }).copiedPlan = text
+        },
+      },
+    })
+  })
+  await page.goto('/#plan')
+  await page.getByRole('button', { name: /閱讀/ }).click()
+  await page.locator('[data-task-card]:visible').first().locator('label').click()
+  await page.getByRole('button', { name: '複製我的清單' }).click()
+
+  const copied = await page.evaluate(() => (window as typeof window & { copiedPlan?: string }).copiedPlan)
+  expect(copied).toContain('使用情境　閱讀')
+  expect(copied).toContain('☑')
+  expect(copied).toContain('完成數不是安全分數')
+
+  const card = page.locator('[data-task-card]:visible').first()
+  const checkbox = card.locator('[data-task-checkbox]')
+  await checkbox.evaluate((input: HTMLInputElement) => {
+    input.checked = false
+    input.dispatchEvent(new Event('change', { bubbles: true }))
+  })
+  await card.locator('.task-card__sources a').first().evaluate((link) => {
+    link.addEventListener('click', (event) => event.preventDefault(), { once: true })
+    ;(link as HTMLAnchorElement).click()
+  })
+  await expect(checkbox).not.toBeChecked()
 })
 
 test('reduced motion keeps content visible without pinned scroll wrappers', async ({ browser }) => {
@@ -64,4 +124,11 @@ test('the CSP permits same-origin discovery files without external connections',
 
   expect(response.ok).toBe(true)
   expect(response.text).toContain('Sitemap: https://matters-safety-guide.pages.dev/sitemap-index.xml')
+})
+
+test('publishes an agent-readable plain-text guide', async ({ request }) => {
+  const response = await request.get('/llms.txt')
+  expect(response.ok()).toBe(true)
+  expect(response.headers()['content-type']).toContain('text/plain')
+  expect(await response.text()).toContain('# Matters 安全指南')
 })

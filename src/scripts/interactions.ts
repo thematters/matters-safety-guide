@@ -8,11 +8,48 @@ if (plan) {
   const checkboxes = Array.from(plan.querySelectorAll<HTMLInputElement>('[data-task-checkbox]'))
   const summary = plan.querySelector<HTMLElement>('[data-plan-summary]')
   const reset = plan.querySelector<HTMLButtonElement>('[data-plan-reset]')
+  const copy = plan.querySelector<HTMLButtonElement>('[data-plan-copy]')
+  const print = plan.querySelector<HTMLButtonElement>('[data-plan-print]')
   const liveRegion = document.querySelector<HTMLElement>('[data-live-region]')
 
   const selected = new Set<string>()
 
   const visibleCards = () => taskCards.filter((card) => !card.hidden)
+
+  const buildPlanText = () => {
+    const selectedLabels = scenarioButtons
+      .filter((button) => button.getAttribute('aria-pressed') === 'true')
+      .map((button) => button.textContent?.replace(/^\s*\d+\s*/, '').trim())
+      .filter(Boolean)
+    const scope = selectedLabels.length > 0 ? selectedLabels.join('、') : '完整清單'
+    const tasks = visibleCards().map((card) => {
+      const checked = card.querySelector<HTMLInputElement>('[data-task-checkbox]')?.checked
+      const title = card.querySelector<HTMLElement>('.task-card__body strong')?.textContent?.trim()
+      const detail = card.querySelector<HTMLElement>('.task-card__body > span')?.textContent?.trim()
+      return `${checked ? '☑' : '☐'} ${title}\n   ${detail}`
+    })
+
+    return [
+      'Matters 安全行動清單',
+      `使用情境　${scope}`,
+      '提醒　完成數不是安全分數，請依自己的威脅模型調整。',
+      '',
+      ...tasks,
+      '',
+      `產生自 ${window.location.origin}${window.location.pathname}`,
+    ].join('\n')
+  }
+
+  const copyPlan = async () => {
+    const text = buildPlanText()
+    try {
+      await navigator.clipboard.writeText(text)
+    } catch {
+      updateSummary('瀏覽器未允許自動複製，請使用列印功能保留清單')
+      return
+    }
+    updateSummary('行動清單已複製，只存在你的剪貼簿中')
+  }
 
   const updateSummary = (announcement?: string) => {
     const visible = visibleCards()
@@ -78,6 +115,9 @@ if (plan) {
     updateSummary('情境選擇與完成標記已清除')
   })
 
+  copy?.addEventListener('click', copyPlan)
+  print?.addEventListener('click', () => window.print())
+
   applyFilter()
 }
 
@@ -86,6 +126,8 @@ document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
     const id = link.hash.slice(1)
     const target = id ? document.getElementById(id) : null
     if (target instanceof HTMLDetailsElement) target.open = true
+
+    const mobileMenu = link.closest<HTMLDetailsElement>('[data-mobile-menu]')
+    if (mobileMenu) mobileMenu.open = false
   })
 })
-
