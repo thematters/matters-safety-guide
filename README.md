@@ -18,6 +18,16 @@ npm run build
 npm run test:e2e
 ```
 
+## 發布
+
+本專案沿用既有 Cloudflare Pages Direct Upload 專案。`develop` 是預覽分支，`main` 是正式分支。
+
+```bash
+npm run build
+npm run deploy:preview
+npm run deploy:production
+```
+
 ## 設計系統來源
 
 本 repo vendored 以下 `thematters/design-system` 產物，來源 commit 固定為 `21606749cbeb94bde83a873dd799e7fa8f95d950`。
