@@ -183,4 +183,4 @@
 - [x] 研究來源可開啟且文案未超出來源支持範圍
 - [x] CI 與 Codecov 通過
 - [x] staging smoke test 通過
-- [ ] production smoke test 通過
+- [x] production smoke test 通過
