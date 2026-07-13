@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop, codex/safety-guide-productization]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run test:coverage
+      - uses: codecov/codecov-action@v5
+        with:
+          use_oidc: true
+          files: ./coverage/lcov.info
+          fail_ci_if_error: true
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
