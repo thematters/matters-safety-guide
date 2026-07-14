@@ -9,7 +9,7 @@
 - Production merge　`d207d95494b7ed225513440b6963191b9338ec63`
 - Recommendation　Released
 - Current lifecycle state　production verified
-- Production state　active on `matters-safety-guide.pages.dev`
+- Production state　active on `safety.matters.town`
 
 ## Scope evaluated
 
@@ -78,11 +78,11 @@
 - Source commit　`d207d95`
 - Deployment ID　`6464d107-9585-498b-a1d3-5ebaa5224e33`
 - Immutable URL　<https://6464d107.matters-safety-guide.pages.dev>
-- Production URL　<https://matters-safety-guide.pages.dev>
+- Pages URL　<https://matters-safety-guide.pages.dev>
 - Immutable URL smoke tests　17 pass across desktop and mobile
 - Production URL smoke tests　17 pass across desktop and mobile
 - Response　HTTP 200，沒有 preview `X-Robots-Tag`
-- Canonical and Open Graph URL　`https://matters-safety-guide.pages.dev/`
+- Canonical and Open Graph URL　`https://matters-safety-guide.pages.dev/` at initial release
 - Verified discovery files　sitemap、robots.txt、security.txt、llms.txt
 - Verified headers　CSP、HSTS、Referrer-Policy、X-Content-Type-Options、X-Frame-Options、Permissions-Policy、COOP、CORP
 
@@ -96,7 +96,7 @@
 
 ## Rollback plan
 
-Cloudflare Pages 保留既有 production deployments。若 production smoke test 失敗，回復到部署 `1e1348de-cf9e-4e64-9784-a28625c182be`，並停止 custom-domain promotion。Git 端由新的 revert PR 回復 main merge commit。
+Cloudflare Pages 保留既有 production deployments。若 production smoke test 失敗，回復到部署 `1e1348de-cf9e-4e64-9784-a28625c182be`。Git 端由新的 revert PR 回復 main merge commit。若只有自訂網域異常，可暫時以 Pages 備援網址提供服務並檢查 DNS、憑證與 Pages domain 狀態。
 
 ## Known follow-up
 
@@ -105,10 +105,9 @@ Cloudflare Pages 保留既有 production deployments。若 production smoke test
 1. 由 product 確認目前去中心化發布、保存與撤除範圍
 2. 補上 2FA、工作階段檢視與撤銷、密碼重設後撤銷既有工作階段
 3. NCC 條款批次確認化名、個資、金流、跨境與保存語言
-4. `safety.matters.town` 已加到 Pages 專案，但 verification 顯示 `CNAME record not set`；需完成 DNS 與憑證後再切換 canonical
 
 ## Release result
 
 本 release 已由 PR #13 從 `develop` promotion 至 `main`。promotion PR 的 CI、`codecov/project` 與 `codecov/patch` 全部通過。正式部署、smoke、headers、canonical、sitemap、robots、security.txt 與 llms.txt 驗證完成。
 
-`safety.matters.town` 不列入本次正式網址，因 Pages domain association 仍回報 `CNAME record not set`。在取得 DNS edit 權限、建立 CNAME 並完成憑證前，canonical 保持可解析的 Pages 網址。
+2026-07-14 已完成 `safety.matters.town` 的 DNS、Pages domain association 與 Google Trust Services 憑證。Cloudflare API 的 domain、validation 與 verification 均為 active，正式 edge 回應 HTTP 200，憑證 SAN 包含 `safety.matters.town`。canonical、Open Graph URL、sitemap、robots.txt 與 security.txt 已切換到正式網域，Pages 網址保留為備援與 immutable deployment 紀錄。

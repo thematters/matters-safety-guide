@@ -5,13 +5,13 @@
 - 最後整體檢視　2026-07-14
 - 維護者　Matters
 - 預定複查間隔　90 天
-- 正式網址　https://matters-safety-guide.pages.dev/
+- 正式網址　https://safety.matters.town/
 
 | 措施 | 狀態 | 目前證據 | 最後驗證 | 證據到期 | 限制 | 負責方 |
 | --- | --- | --- | --- | --- | --- | --- |
-| HTTPS 傳輸加密 | 已驗證 | 正式 Pages 網址回應 HTTP 200，並提供 TLS 與 HSTS | 2026-07-14 | 2026-10-12 | 保護傳輸內容，不會隱藏所有連線中繼資料。 | Matters infra |
+| HTTPS 傳輸加密 | 已驗證 | 正式網域回應 HTTP 200，並提供 TLS 與 HSTS | 2026-07-14 | 2026-10-12 | 保護傳輸內容，不會隱藏所有連線中繼資料。 | Matters infra |
 | 無應用層分析追蹤 | 已驗證 | 本 repo 原始碼、依賴與正式 build 產物未載入分析、廣告或追蹤服務 | 2026-07-14 | 2026-10-12 | Cloudflare 仍可能為傳輸、安全與防濫用處理一般請求中繼資料。 | Guide maintainer |
-| Cloudflare ECH 可用性 | 已驗證 | Pages 網址的 HTTPS DNS 記錄含 ECH 設定 | 2026-07-14 | 2026-10-12 | 需要瀏覽器、DNS 與網路環境支援，且不等於匿名。 | Matters infra |
+| Cloudflare ECH 可用性 | 已驗證 | 正式網域的 HTTPS DNS 記錄含 ECH 設定 | 2026-07-14 | 2026-10-12 | 需要瀏覽器、DNS 與網路環境支援，且不等於匿名。 | Matters infra |
 | 去中心化發布與保存範圍 | 待補證據 | 公開說明提及 IPFS，尚待產品團隊確認目前發布流程、內容範圍與撤除邊界 | 2026-07-14 | 2026-10-12 | 公開內容也可能被第三方截圖、轉貼或保存，去中心化保存會進一步提高撤除難度。 | Matters product |
 | 帳號安全控制 | 待補證據 | 登入、重設密碼與安全 cookie 已取得 repo 證據；2FA、工作階段檢視與撤銷仍待補 | 2026-07-14 | 2026-10-12 | 密碼變更或重設是否撤銷既有工作階段尚未取得證據，本指南不能代替產品內的安全控制。 | Matters product |
 | 化名與個資政策 | 政策處理中 | 已建立隱私優先的政策對齊草案，正式文字等待 NCC 批次更新 | 2026-07-14 | 2026-10-12 | 化名不等於冒充，也不能消除付款、裝置與操作足跡；草案尚未取代現行條款。 | Matters governance |
@@ -20,7 +20,7 @@
 
 ### HTTPS 傳輸加密
 
-- command `curl -sSI https://matters-safety-guide.pages.dev/`　HTTP 200，Strict-Transport-Security 啟用
+- command `curl -sSI https://safety.matters.town/`　HTTP 200，Strict-Transport-Security 啟用
 
 主要連結　https://developers.cloudflare.com/ssl/
 
@@ -32,7 +32,7 @@
 
 ### Cloudflare ECH 可用性
 
-- command `curl -sS 'https://dns.google/resolve?name=matters-safety-guide.pages.dev&type=HTTPS' | jq -r '.Answer[].data'`　HTTPS/SVCB 記錄含 ech 參數
+- command `curl -sS 'https://dns.google/resolve?name=safety.matters.town&type=HTTPS' | jq -r '.Answer[].data'`　HTTPS/SVCB 記錄含 ech 參數
 
 主要連結　https://developers.cloudflare.com/ssl/edge-certificates/ech/
 
