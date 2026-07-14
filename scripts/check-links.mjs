@@ -17,7 +17,9 @@ const checkUrl = async (url) => {
       signal: controller.signal,
       headers: { 'user-agent': 'MattersSafetyGuideLinkCheck/1.0' },
     })
-    return { url, status: response.status }
+    const status = response.status
+    await response.body?.cancel()
+    return { url, status }
   } finally {
     clearTimeout(timeout)
   }
