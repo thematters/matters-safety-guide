@@ -9,7 +9,7 @@
   "items": [
     {
       "id": "https",
-      "title": "網站使用 HTTPS 與 HSTS",
+      "title": "網站支援 HTTPS 與 HSTS",
       "status": "verified",
       "statusLabel": "已驗證",
       "verifiedAt": "2026-07-14",
@@ -28,7 +28,7 @@
     },
     {
       "id": "no-app-tracking",
-      "title": "這份指南沒有加入分析與廣告追蹤",
+      "title": "本指南不使用分析或廣告追蹤",
       "status": "verified",
       "statusLabel": "已驗證",
       "verifiedAt": "2026-07-14",
@@ -47,7 +47,7 @@
     },
     {
       "id": "ech",
-      "title": "正式網域提供 ECH 設定",
+      "title": "safety.matters.town 支援 ECH",
       "status": "verified",
       "statusLabel": "已驗證",
       "verifiedAt": "2026-07-14",
@@ -66,7 +66,7 @@
     },
     {
       "id": "onion-reader",
-      "title": "洋蔥小站提供匿名唯讀入口",
+      "title": "洋蔥小站提供唯讀入口",
       "status": "verified",
       "statusLabel": "已驗證",
       "verifiedAt": "2026-07-14",
@@ -85,7 +85,7 @@
     },
     {
       "id": "ipfs-publication",
-      "title": "公開文章會觸發 IPFS 發布流程",
+      "title": "公開文章的 IPFS 發布流程",
       "status": "verified",
       "statusLabel": "已驗證",
       "verifiedAt": "2026-07-14",
@@ -104,7 +104,7 @@
     },
     {
       "id": "memory-toast",
-      "title": "記憶吐司可把公開文章備份到自己手上",
+      "title": "使用記憶吐司自行備份公開文章",
       "status": "verified",
       "statusLabel": "已驗證",
       "verifiedAt": "2026-07-14",
@@ -123,7 +123,7 @@
     },
     {
       "id": "government-requests",
-      "title": "政府資料請求仍缺固定公開報告",
+      "title": "政府資料請求公開報告尚待建立",
       "status": "pending",
       "statusLabel": "待補證據",
       "verifiedAt": "2026-07-14",
@@ -142,7 +142,7 @@
     },
     {
       "id": "account-controls",
-      "title": "帳號安全控制仍有幾項查不到",
+      "title": "帳號安全控制的公開資料尚待補齊",
       "status": "pending",
       "statusLabel": "待補證據",
       "verifiedAt": "2026-07-14",
@@ -166,7 +166,7 @@
     },
     {
       "id": "privacy-policy",
-      "title": "隱私條款會跟 NCC 批次一起更新",
+      "title": "隱私條款將與 NCC 改版一併更新",
       "status": "policy",
       "statusLabel": "政策處理中",
       "verifiedAt": "2026-07-14",
