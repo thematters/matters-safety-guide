@@ -1,31 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
   <title id="title">Matters 安全指南</title>
-  <desc id="desc">先看見足跡，再決定怎麼行動</desc>
+  <desc id="desc">一篇稿子，會帶著哪些線索上線？</desc>
+  <defs>
+    <linearGradient id="stage" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#211946"/>
+      <stop offset="1" stop-color="#08070c"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".24"/>
+      <stop offset="1" stop-color="#7258ff" stop-opacity=".12"/>
+    </linearGradient>
+  </defs>
   <rect width="1200" height="630" fill="#faf7f0"/>
-  <path d="M0 0h1200v18H0z" fill="#7258ff"/>
-  <path d="M0 612h1200v18H0z" fill="#c3f432"/>
-  <g fill="none" stroke="#b3b3b3" stroke-dasharray="3 9">
-    <circle cx="905" cy="315" r="230"/>
-    <circle cx="905" cy="315" r="150"/>
-    <path d="M675 315h460M905 85v460"/>
+  <rect x="660" width="540" height="630" fill="#f5f3ff"/>
+  <rect y="0" width="1200" height="14" fill="#7258ff"/>
+  <image href="brand/matters-logo.svg" x="68" y="54" width="116" height="24"/>
+  <text x="205" y="75" fill="#000" font-family="PingFang TC, system-ui, sans-serif" font-size="22">安全指南</text>
+  <g fill="#000" font-family="PingFang TC, system-ui, sans-serif" font-weight="500">
+    <text x="68" y="212" font-size="78">一篇稿子，</text>
+    <text x="68" y="310" font-size="78">會帶著哪些</text>
+    <text x="68" y="408" font-size="78" fill="#7258ff">線索上線？</text>
   </g>
-  <g fill="none" stroke="#7258ff" stroke-width="9" stroke-linecap="round">
-    <path d="M905 315L760 168"/>
-    <path d="M905 315L1054 166" stroke-dasharray="14 14"/>
-    <path d="M905 315L762 472"/>
-    <path d="M905 315L1050 470" stroke-dasharray="14 14"/>
-  </g>
-  <g fill="#c3f432" stroke="#000" stroke-width="3">
-    <circle cx="760" cy="168" r="28"/><circle cx="1054" cy="166" r="28"/>
-    <circle cx="762" cy="472" r="28"/><circle cx="1050" cy="470" r="28"/>
-  </g>
-  <circle cx="905" cy="315" r="54" fill="#000"/>
-  <circle cx="905" cy="315" r="34" fill="none" stroke="#c3f432" stroke-width="3"/>
-  <g fill="#000" font-family="system-ui, sans-serif">
-    <text x="72" y="95" font-size="22" font-weight="700" letter-spacing="3">MATTERS FIELD GUIDE · 001</text>
-    <text x="72" y="236" font-size="92" font-weight="600">先看見足跡，</text>
-    <text x="72" y="346" font-size="92" font-weight="600" fill="#7258ff">再決定怎麼行動</text>
-    <text x="72" y="456" font-size="28">隱私、安全與抗審查的情境式行動指南</text>
-    <text x="72" y="548" font-size="20" font-weight="600">safety.matters.town</text>
+  <text x="68" y="490" fill="#333" font-family="PingFang TC, system-ui, sans-serif" font-size="24">給獨立記者與敏感議題寫作者的安全指南</text>
+  <text x="68" y="558" fill="#32009b" font-family="system-ui, sans-serif" font-size="18" font-weight="700" letter-spacing="2">SAFETY.MATTERS.TOWN</text>
+  <g transform="translate(714 44)">
+    <rect width="430" height="542" fill="url(#stage)" stroke="#000"/>
+    <text x="24" y="38" fill="#fff" font-family="system-ui, sans-serif" font-size="12" letter-spacing="2">ACTIVE TRACE</text>
+    <text x="316" y="38" fill="#c3f432" font-family="system-ui, sans-serif" font-size="12">03 / PUBLISH</text>
+    <g fill="url(#glass)" stroke="#ffffff" stroke-opacity=".45">
+      <rect x="42" y="76" width="310" height="92" transform="rotate(-2 42 76)"/>
+      <rect x="72" y="174" width="316" height="92" transform="rotate(1.5 72 174)"/>
+      <rect x="38" y="272" width="318" height="92" transform="rotate(-1 38 272)"/>
+      <rect x="68" y="370" width="318" height="92" transform="rotate(1.2 68 370)"/>
+    </g>
+    <g font-family="PingFang TC, system-ui, sans-serif">
+      <text x="62" y="106" fill="#c3f432" font-size="11">01 · 裝置</text>
+      <text x="62" y="140" fill="#fff" font-size="20">原稿與檔案屬性</text>
+      <text x="92" y="204" fill="#c3f432" font-size="11">02 · 連線</text>
+      <text x="92" y="238" fill="#fff" font-size="20">上稿時間與 IP</text>
+      <text x="58" y="302" fill="#c3f432" font-size="11">03 · 平台</text>
+      <text x="58" y="336" fill="#fff" font-size="20">版本與發布紀錄</text>
+      <text x="88" y="400" fill="#c3f432" font-size="11">04 · 站外</text>
+      <text x="88" y="434" fill="#fff" font-size="20">IPFS、搜尋與轉貼</text>
+    </g>
+    <rect x="402" y="84" width="3" height="366" fill="#7258ff"/>
+    <rect x="402" y="84" width="3" height="275" fill="#c3f432"/>
+    <text x="24" y="514" fill="#c9c3de" font-family="system-ui, sans-serif" font-size="9" letter-spacing="1">DEVICE → NETWORK → PLATFORM → OUTSIDE</text>
   </g>
 </svg>
