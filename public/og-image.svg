@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
   <title id="title">Matters 安全指南</title>
-  <desc id="desc">一篇稿子，會帶著哪些線索上線？</desc>
+  <desc id="desc">獨立記者的數位足跡與安全準備</desc>
   <defs>
     <linearGradient id="stage" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#211946"/>
@@ -12,16 +12,15 @@
     </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="#faf7f0"/>
-  <rect x="660" width="540" height="630" fill="#f5f3ff"/>
+  <circle cx="970" cy="315" r="420" fill="#f5f3ff"/>
   <rect y="0" width="1200" height="14" fill="#7258ff"/>
   <image href="brand/matters-logo.svg" x="68" y="54" width="116" height="24"/>
   <text x="205" y="75" fill="#000" font-family="PingFang TC, system-ui, sans-serif" font-size="22">安全指南</text>
   <g fill="#000" font-family="PingFang TC, system-ui, sans-serif" font-weight="500">
-    <text x="68" y="212" font-size="78">一篇稿子，</text>
-    <text x="68" y="310" font-size="78">會帶著哪些</text>
-    <text x="68" y="408" font-size="78" fill="#7258ff">線索上線？</text>
+    <text x="68" y="246" font-size="88">獨立記者的</text>
+    <text x="68" y="358" font-size="88" fill="#7258ff">數位足跡</text>
   </g>
-  <text x="68" y="490" fill="#333" font-family="PingFang TC, system-ui, sans-serif" font-size="24">給獨立記者與敏感議題寫作者的安全指南</text>
+  <text x="68" y="455" fill="#333" font-family="PingFang TC, system-ui, sans-serif" font-size="24">查資料、聯絡、發稿與收款的安全準備</text>
   <text x="68" y="558" fill="#32009b" font-family="system-ui, sans-serif" font-size="18" font-weight="700" letter-spacing="2">SAFETY.MATTERS.TOWN</text>
   <g transform="translate(714 44)">
     <rect width="430" height="542" fill="url(#stage)" stroke="#000"/>
