@@ -9,6 +9,8 @@ test('renders the complete guide and primary landmarks', async ({ page }) => {
   await expect(heading).toHaveCSS('opacity', '1')
   await expect(heading).toHaveCSS('visibility', 'visible')
   await expect(page.locator('[data-site-header]')).toBeVisible()
+  await expect(page.locator('[data-site-header]')).toHaveCSS('position', 'sticky')
+  await expect(heading).toHaveCSS('font-family', /jf open 粉圓/i)
   await expect(page.locator('nav.site-nav')).toHaveCount(1)
   await expect(page.getByRole('heading', { name: 'Matters 目前做了哪些保護' })).toBeVisible()
   await expect(page.locator('main')).toContainText('化名能幫忙，別把它當隱身衣')

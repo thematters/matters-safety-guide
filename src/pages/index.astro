@@ -334,9 +334,9 @@ const governmentCases = [
           <span>項等待條款與 NCC 批次更新</span>
         </article>
         <div class="dashboard-bar" aria-hidden="true">
-          <span class="dashboard-bar__verified" style={`flex-grow:${evidenceCounts.verified}`}></span>
-          <span class="dashboard-bar__pending" style={`flex-grow:${evidenceCounts.pending}`}></span>
-          <span class="dashboard-bar__policy" style={`flex-grow:${evidenceCounts.policy}`}></span>
+          {Array.from({ length: evidenceCounts.verified }).map(() => <span class="dashboard-bar__verified"></span>)}
+          {Array.from({ length: evidenceCounts.pending }).map(() => <span class="dashboard-bar__pending"></span>)}
+          {Array.from({ length: evidenceCounts.policy }).map(() => <span class="dashboard-bar__policy"></span>)}
         </div>
       </div>
 
