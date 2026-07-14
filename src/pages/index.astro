@@ -1,10 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import FootprintMap from '../components/FootprintMap.astro'
+import TraceStack from '../components/TraceStack.astro'
 import {
   actionTasks,
   evidenceItems,
-  knowledgeTopics,
   priorityLabels,
   researchReferenceById,
   scenarios,
@@ -15,97 +14,143 @@ import { groupTasks, statusCounts } from '../lib/guide'
 const taskGroups = groupTasks(actionTasks)
 const evidenceCounts = statusCounts(evidenceItems.map(({ status }) => status))
 const description =
-  '從閱讀、互動、發布到金流，理解數位足跡，建立自己的安全行動清單，並查核 Matters 已有與待補的保護措施。'
+  '給獨立記者與敏感議題寫作者的 Matters 安全指南。從查資料、聯絡、上稿與收款，一路看懂平台來函、洋蔥小站、IPFS 與個人備份。'
+
+const requestSteps = [
+  {
+    index: '01',
+    title: '先確認誰來函、要什麼',
+    body: '來文機關、法律依據、帳號、資料種類與時間範圍都要寫清楚。要求太廣或說不明白，不能直接往下查。',
+  },
+  {
+    index: '02',
+    title: '請法律顧問看管轄與比例',
+    body: '平台主體、後台所在地、案件性質與使用者所在國家都會影響判斷。兒少安全與一般刑事調查也不能混成同一套處理。',
+  },
+  {
+    index: '03',
+    title: '只盤點已經保存的資料',
+    body: '公文寄到之後，資料不會憑空出現。平台平常少收一項、少留一天，遇到調閱時就少一項可以交出去。',
+  },
+  {
+    index: '04',
+    title: '把回覆與理由留下紀錄',
+    body: '有資料、沒有資料、拒絕提供或立即處理，都應留下範圍與理由，之後才有辦法做透明度報告與外部檢查。',
+  },
+]
+
+const governmentCases = [
+  {
+    date: '2023.02',
+    agency: '法務部調查局',
+    request: '查詢帳號註冊資料與綁定錢包',
+    result: '治理紀錄寫明，平台僅能確認沒有綁定錢包，其餘資料已無法回復。',
+  },
+  {
+    date: '2023.05',
+    agency: '台中警察局',
+    request: '要求提供使用者 IP 位址',
+    result: '治理紀錄寫明，公函半年後才收到，平台未回覆。',
+  },
+  {
+    date: '2025.07',
+    agency: '台北警察局',
+    request: '妨害名譽案要求 IP 等資料',
+    result: '治理紀錄記為未回覆，沒有公開更多個案細節。',
+  },
+]
 ---
 
-<BaseLayout title="Matters 安全指南｜先看見足跡，再決定怎麼行動" description={description}>
+<BaseLayout title="Matters 安全指南｜一篇稿子會帶著哪些線索上線？" description={description}>
   <header class="site-header" data-site-header>
-    <a class="wordmark" href="#top">
-      <span class="wordmark__mark" aria-hidden="true">M</span>
-      <span class="sr-only">Matters</span>
+    <a class="wordmark" href="#top" aria-label="Matters 安全指南首頁">
+      <img class="wordmark__graph" src="/brand/matters-logo-graph.svg" alt="" />
+      <img class="wordmark__logo" src="/brand/matters-logo.svg" alt="Matters" />
+      <span class="wordmark__divider" aria-hidden="true"></span>
       <span>安全指南</span>
     </a>
     <nav class="site-nav" aria-label="主要導覽">
-      <a href="#trace">數位足跡</a>
+      <a href="#trace">採訪路線</a>
+      <a href="#platform-requests">平台來函</a>
       <a href="#plan">行動清單</a>
       <a href="#evidence">平台措施</a>
-      <a href="#emergency">急迫事件</a>
     </nav>
     <div class="mobile-header-actions">
-      <a class="mobile-emergency-link" href="#emergency">急迫事件</a>
+      <a class="mobile-emergency-link" href="#emergency">出事怎麼辦</a>
       <details class="mobile-menu" data-mobile-menu>
         <summary>目錄</summary>
         <nav aria-label="行動版主要導覽">
-          <a href="#trace">數位足跡</a>
+          <a href="#trace">採訪路線</a>
+          <a href="#platform-requests">平台來函</a>
           <a href="#plan">行動清單</a>
           <a href="#evidence">平台措施</a>
-          <a href="#emergency">急迫事件</a>
+          <a href="#emergency">出事怎麼辦</a>
           <a href="#sources">研究來源</a>
         </nav>
       </details>
     </div>
-    <a class="header-meta" href="#about">2026.07<br />第一版</a>
+    <a class="header-meta" href="#about">2026.07<br />第二版</a>
   </header>
 
   <main id="main-content">
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero__copy">
-        <p class="eyebrow" data-hero-item>MATTERS FIELD GUIDE · 001</p>
+        <p class="eyebrow" data-hero-item>MATTERS FIELD GUIDE · FOR INDEPENDENT JOURNALISTS</p>
         <h1 id="hero-title">
-          先看見<br />足跡，<br /><span>再決定怎麼行動</span>
+          一篇稿子，<br />會帶著哪些<br /><span>線索上線？</span>
         </h1>
         <p class="hero__lead" data-hero-item>
-          化名能降低部分曝險，不能抹去裝置、網路、互動與金流留下的線索。從你的使用情境出發，建立一套不誇大承諾的保護方式。
+          用化名發稿，只處理了名字。登入的信箱、裝置、連線方式、照片中繼資料與收款紀錄，仍可能把零散片段接回你身上。這份指南陪你走一遍從查資料到發稿後的路。
         </p>
         <div class="hero__actions" data-hero-item>
-          <a class="ds-btn ds-btn--primary ds-btn--large" href="#trace">開始辨識足跡</a>
-          <a class="text-link" href="#principles">先讀三個界線 <span aria-hidden="true">↘</span></a>
+          <a class="ds-btn ds-btn--primary ds-btn--large" href="#trace">從採訪流程開始</a>
+          <a class="text-link" href="#evidence">Matters 做了什麼 <span aria-hidden="true">↘</span></a>
         </div>
       </div>
       <div class="hero__visual" data-hero-map>
-        <FootprintMap context="hero" />
-        <p class="hero__caption"><span>FIG. 01</span> 線索常在不同服務之間被重新拼接</p>
+        <TraceStack context="hero" />
+        <p class="hero__caption"><span>FIG. 01</span> 每個服務只看到一部分，拼在一起才會接近完整輪廓</p>
       </div>
     </section>
 
     <aside class="emergency-rail" aria-label="急迫事件快速入口">
-      <p><span class="signal-dot"></span>現在有急迫風險嗎</p>
-      <a href="#account-compromise">帳號疑似遭入侵</a>
-      <a href="#harassment">持續騷擾或威脅</a>
-      <a href="#device-monitoring">裝置疑似被監控</a>
-      <a class="emergency-rail__help" href="https://www.accessnow.org/help/" target="_blank" rel="noopener noreferrer">尋求外部協助 ↗</a>
+      <p><span class="signal-dot"></span>現在就有狀況嗎</p>
+      <a href="#account-compromise">帳號進不去或資料被改</a>
+      <a href="#harassment">有人持續威脅或追蹤</a>
+      <a href="#device-monitoring">懷疑裝置被監控</a>
+      <a class="emergency-rail__help" href="https://www.accessnow.org/help/" target="_blank" rel="noopener noreferrer">找外部專業支援 ↗</a>
     </aside>
 
     <section class="principles section-shell" id="principles" aria-labelledby="principles-title">
       <header class="section-heading">
-        <p class="eyebrow">READ THIS FIRST</p>
-        <h2 id="principles-title">先記住三個界線</h2>
-        <p>安全不是一次設定完成的狀態。你面對的對手、可接受的代價與使用方式改變，做法也要跟著調整。</p>
+        <p class="eyebrow">BEFORE YOU START</p>
+        <h2 id="principles-title">開始前，先把三件事說清楚</h2>
+        <p>工具能幫你少留一些線索，實際保護到哪裡，仍要看對手、工作內容與你願意付出的操作成本。</p>
       </header>
       <div class="principle-list">
         <article>
           <p class="principle-list__index">01</p>
-          <h3>隱私不等於匿名</h3>
-          <p>隱私是控制誰能看見哪些資訊。匿名則要求不同線索難以連回同一個人，門檻更高，也更依賴操作習慣。</p>
+          <h3>化名能幫忙，別把它當隱身衣</h3>
+          <p>名稱換掉之後，信箱、頭像、活動時間、寫作習慣與收款方式還在。只要其中幾項被重複使用，身分就有機會被接起來。</p>
         </article>
         <article>
           <p class="principle-list__index">02</p>
-          <h3>化名不等於冒充</h3>
-          <p>分開化名與日常身分可以減少關聯，但不能使用他人身分，也不會消除付款、裝置或關係網留下的足跡。</p>
+          <h3>每多用一個服務，就多一份紀錄</h3>
+          <p>瀏覽器、網路服務商、平台、支付商與公開鏈看到的內容不同。先畫出資料經過誰，再決定哪一段需要換工具。</p>
         </article>
         <article>
           <p class="principle-list__index">03</p>
-          <h3>可保存不等於可撤回</h3>
-          <p>公開內容可能被截圖、轉貼、搜尋引擎或分散式系統保存。發布前要把長期可見性納入判斷。</p>
+          <h3>發出去的內容，很難全數收回</h3>
+          <p>搜尋引擎、讀者備份、截圖與 IPFS 都可能留下副本。抗刪除對新聞保存很重要，對更正、撤回與來源保護也會帶來代價。</p>
         </article>
       </div>
     </section>
 
     <section class="trace-story" id="trace" aria-labelledby="trace-title" data-trace-story>
       <header class="section-heading section-shell">
-        <p class="eyebrow">TRACE ATLAS</p>
-        <h2 id="trace-title">同一個帳號，會留下四種不同足跡</h2>
-        <p>選擇你最常做的事。每條路徑都只揭露一部分，真正的風險通常來自它們被拼在一起。</p>
+        <p class="eyebrow">ACTIVE TRACE</p>
+        <h2 id="trace-title">從查資料到收款，每一步都會留下不同紀錄</h2>
+        <p>往下看四段工作情境。右邊的資料層會跟著切換，讓你看見同一個動作可能同時落在哪幾個地方。</p>
       </header>
 
       <div class="trace-layout section-shell">
@@ -122,11 +167,11 @@ const description =
               <p class="trace-chapter__summary">{scenario.summary}</p>
               <div class="trace-chapter__lists">
                 <div>
-                  <h4>可能留下</h4>
+                  <h4>可能留下什麼</h4>
                   <ul>{scenario.traces.map((trace) => <li>{trace}</li>)}</ul>
                 </div>
                 <div>
-                  <h4>先做這些</h4>
+                  <h4>現在可以怎麼做</h4>
                   <ul>{scenario.actions.map((action) => <li>{action}</li>)}</ul>
                 </div>
               </div>
@@ -134,10 +179,55 @@ const description =
           ))}
         </div>
         <div class="trace-visual-wrap" data-trace-pin>
-          <FootprintMap context="story" />
-          <div class="trace-readout" aria-hidden="true">
-            <p>ACTIVE TRACE</p>
-            <strong data-trace-readout>01 / 閱讀</strong>
+          <TraceStack context="story" />
+        </div>
+      </div>
+    </section>
+
+    <section class="platform-requests" id="platform-requests" aria-labelledby="platform-requests-title">
+      <div class="section-shell">
+        <header class="section-heading section-heading--light section-heading--split">
+          <div>
+            <p class="eyebrow">FROM THE PLATFORM SIDE</p>
+            <h2 id="platform-requests-title">政府來函寄到平台後，會發生什麼</h2>
+          </div>
+          <p>來函只是一個起點。平台平常收了多少、留了多久，才決定手上有多少資料能被調閱。</p>
+        </header>
+
+        <div class="platform-requests__layout">
+          <figure class="platform-requests__figure">
+            <img src="/illustrations/platform-request.jpg" alt="Matters 角色站在天平旁，衡量平台治理、法律要求與使用者權益" loading="lazy" width="1536" height="1024" />
+            <figcaption>
+              <span>FROM 看不見的平台清道夫</span>
+              同一套視覺裡，平台需要同時面對內容治理、公權力與使用者安全。
+            </figcaption>
+          </figure>
+
+          <ol class="request-flow">
+            {requestSteps.map((step) => (
+              <li>
+                <span>{step.index}</span>
+                <div><h3>{step.title}</h3><p>{step.body}</p></div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="case-file">
+          <div class="case-file__intro">
+            <p class="eyebrow">CASE FILE · SELF-REPORTED</p>
+            <h3>治理資料裡記下的三次來函</h3>
+            <p>以下是 Matters 公開治理資料整理出的歷史紀錄。它們能說明過去發生過什麼，不能當成法律意見，也不能保證未來每一案都會用相同方式處理。</p>
+            <a href="https://thematters.github.io/matters-governance-site/reading/platform-meets-law/" target="_blank" rel="noopener noreferrer">查看〈平台遇上法律〉全文 ↗</a>
+          </div>
+          <div class="case-file__list">
+            {governmentCases.map((item) => (
+              <article>
+                <p><span>{item.date}</span>{item.agency}</p>
+                <h4>{item.request}</h4>
+                <p>{item.result}</p>
+              </article>
+            ))}
           </div>
         </div>
       </div>
@@ -147,15 +237,15 @@ const description =
       <header class="section-heading section-heading--split">
         <div>
           <p class="eyebrow">YOUR FIELD NOTES</p>
-          <h2 id="plan-title">建立你的行動清單</h2>
+          <h2 id="plan-title">把今天要做的事勾出來</h2>
         </div>
-        <p>清單只在目前頁面運作，不會保存或傳送。你可以在裝置上複製或列印結果。完成幾項不代表「已安全」。</p>
+        <p>清單只在目前頁面運作，不會保存或送出。你可以複選工作情境，再把結果複製或列印下來。</p>
       </header>
 
       <div class="scenario-picker" aria-labelledby="scenario-picker-title">
         <div>
-          <p class="scenario-picker__label" id="scenario-picker-title">我會在 Matters</p>
-          <p class="scenario-picker__hint">可複選。尚未選擇時顯示完整清單。</p>
+          <p class="scenario-picker__label" id="scenario-picker-title">我會在 Matters 做這些事</p>
+          <p class="scenario-picker__hint">可以複選。沒有選擇時會顯示完整清單。</p>
         </div>
         <div class="scenario-picker__buttons" role="group" aria-label="選擇使用情境">
           {scenarios.map((scenario) => (
@@ -170,7 +260,7 @@ const description =
         <p data-plan-summary>目前顯示完整清單，共 {actionTasks.length} 項</p>
         <div class="plan-tools" aria-label="清單工具">
           <button type="button" class="plan-reset" data-plan-reset>清除選擇與勾選</button>
-          <button type="button" class="ds-btn ds-btn--secondary ds-btn--medium" data-plan-copy>複製我的清單</button>
+          <button type="button" class="ds-btn ds-btn--secondary ds-btn--medium" data-plan-copy>複製清單</button>
           <button type="button" class="ds-btn ds-btn--secondary ds-btn--medium" data-plan-print>列印</button>
         </div>
       </div>
@@ -180,38 +270,22 @@ const description =
           <section class={`task-column task-column--${priority}`} data-task-group={priority}>
             <header>
               <span>{label.index}</span>
-              <div>
-                <h3>{label.title}</h3>
-                <p>{label.note}</p>
-              </div>
+              <div><h3>{label.title}</h3><p>{label.note}</p></div>
             </header>
             <div class="task-list">
               {taskGroups[priority as keyof typeof taskGroups].map((task) => (
-                <article
-                  class="task-card"
-                  data-task-card
-                  data-task-id={task.id}
-                  data-scenarios={task.scenarios.join(',')}
-                >
+                <article class="task-card" data-task-card data-task-id={task.id} data-scenarios={task.scenarios.join(',')}>
                   <label class="task-card__toggle">
                     <input type="checkbox" data-task-checkbox />
                     <span class="task-card__check" aria-hidden="true"></span>
-                    <span class="task-card__body">
-                      <strong>{task.title}</strong>
-                      <span>{task.detail}</span>
-                    </span>
+                    <span class="task-card__body"><strong>{task.title}</strong><span>{task.detail}</span></span>
                   </label>
                   <small class="task-card__sources">
-                    依據{' '}
+                    參考{' '}
                     {task.sourceIds.map((sourceId, sourceIndex) => {
                       const source = researchReferenceById.get(sourceId)
                       if (!source) return null
-                      return (
-                        <>
-                          {sourceIndex > 0 && '、'}
-                          <a href={source.href} target="_blank" rel="noopener noreferrer">{source.shortName}</a>
-                        </>
-                      )
+                      return <>{sourceIndex > 0 && '、'}<a href={source.href} target="_blank" rel="noopener noreferrer">{source.shortName}</a></>
                     })}
                   </small>
                 </article>
@@ -222,64 +296,47 @@ const description =
       </div>
     </section>
 
-    <section class="knowledge" id="knowledge" aria-labelledby="knowledge-title">
-      <div class="section-shell">
-        <header class="section-heading section-heading--light">
-          <p class="eyebrow">SIX LAYERS</p>
-          <h2 id="knowledge-title">一套做法，保護不了所有層次</h2>
-          <p>從帳號到事件應變，逐層檢查。每個層次都包含技術、習慣與需要他人協助的部分。</p>
-        </header>
-        <div class="knowledge-grid">
-          {knowledgeTopics.map((topic) => (
-            <article class="knowledge-card" id={`topic-${topic.id}`}>
-              <p class="knowledge-card__index">{topic.index}</p>
-              <h3>{topic.title}</h3>
-              <p>{topic.lead}</p>
-              <ul>{topic.points.map((point) => <li>{point}</li>)}</ul>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
     <section class="evidence section-shell" id="evidence" aria-labelledby="evidence-title" data-dashboard>
       <header class="section-heading section-heading--split">
         <div>
-          <p class="eyebrow">EVIDENCE, NOT PROMISES</p>
-          <h2 id="evidence-title">Matters 措施與證據</h2>
+          <p class="eyebrow">WHAT MATTERS DOES</p>
+          <h2 id="evidence-title">Matters 目前做了哪些保護</h2>
         </div>
-        <p>狀態反映目前可查核的證據，不等同整個平台的安全評分。缺少證據時會明確保留，不以推測補上。</p>
+        <p>每一項都同時寫出證據與保護不到的地方。查不到的部分會留在「待補證據」，不拿推測補空白。</p>
       </header>
+
+      <div class="measure-strip" aria-label="Matters 抗審查與備份工具">
+        <a href="https://github.com/thematters/matters-onion-gateway" target="_blank" rel="noopener noreferrer">
+          <span>READ</span><h3>洋蔥小站</h3><p>不想直接連上公開網站時，可從 Tor 走唯讀入口。目前不能登入或發稿。</p><i>01 ↗</i>
+        </a>
+        <a href="https://thematters.github.io/matters-governance-site/reading/hack-the-platform/" target="_blank" rel="noopener noreferrer">
+          <span>KEEP</span><h3>IPFS 發布</h3><p>公開文章發布後會觸發 IPFS 流程，讓內容有機會從站外依 CID 取回。</p><i>02 ↗</i>
+        </a>
+        <a href="https://lifeboat.matters.town/" target="_blank" rel="noopener noreferrer">
+          <span>OWN</span><h3>記憶吐司</h3><p>把公開文章下載成自己的備份，或放進自己的保存空間與部落格。</p><i>03 ↗</i>
+        </a>
+      </div>
 
       <div class="dashboard-summary" aria-label="證據狀態總覽">
         <article>
           <p><span class="status-shape status-shape--verified"></span>已驗證</p>
-          <strong>
-            <span class="sr-only">{evidenceCounts.verified} 項</span>
-            <span aria-hidden="true" data-count={evidenceCounts.verified}>{evidenceCounts.verified}</span>
-          </strong>
-          <span>項公開或可重現證據</span>
+          <strong><span class="sr-only">{evidenceCounts.verified} 項</span><span aria-hidden="true" data-count={evidenceCounts.verified}>{evidenceCounts.verified}</span></strong>
+          <span>項有公開或可重現的證據</span>
         </article>
         <article>
           <p><span class="status-shape status-shape--pending"></span>待補證據</p>
-          <strong>
-            <span class="sr-only">{evidenceCounts.pending} 項</span>
-            <span aria-hidden="true" data-count={evidenceCounts.pending}>{evidenceCounts.pending}</span>
-          </strong>
-          <span>項需要產品團隊確認</span>
+          <strong><span class="sr-only">{evidenceCounts.pending} 項</span><span aria-hidden="true" data-count={evidenceCounts.pending}>{evidenceCounts.pending}</span></strong>
+          <span>項還需要產品或治理團隊補資料</span>
         </article>
         <article>
           <p><span class="status-shape status-shape--policy"></span>政策處理中</p>
-          <strong>
-            <span class="sr-only">{evidenceCounts.policy} 項</span>
-            <span aria-hidden="true" data-count={evidenceCounts.policy}>{evidenceCounts.policy}</span>
-          </strong>
-          <span>項等待條款與治理更新</span>
+          <strong><span class="sr-only">{evidenceCounts.policy} 項</span><span aria-hidden="true" data-count={evidenceCounts.policy}>{evidenceCounts.policy}</span></strong>
+          <span>項等待條款與 NCC 批次更新</span>
         </article>
         <div class="dashboard-bar" aria-hidden="true">
-          <span class:list={['dashboard-bar__verified', `dashboard-bar__size-${evidenceCounts.verified}`]}></span>
-          <span class:list={['dashboard-bar__pending', `dashboard-bar__size-${evidenceCounts.pending}`]}></span>
-          <span class:list={['dashboard-bar__policy', `dashboard-bar__size-${evidenceCounts.policy}`]}></span>
+          <span class="dashboard-bar__verified" style={`flex-grow:${evidenceCounts.verified}`}></span>
+          <span class="dashboard-bar__pending" style={`flex-grow:${evidenceCounts.pending}`}></span>
+          <span class="dashboard-bar__policy" style={`flex-grow:${evidenceCounts.policy}`}></span>
         </div>
       </div>
 
@@ -290,76 +347,60 @@ const description =
             <div class="evidence-card__main">
               <div class="evidence-card__title">
                 <h3>{item.title}</h3>
-                <span class={`status-badge status-badge--${item.status}`}>
-                  <i class={`status-shape status-shape--${item.status}`}></i>{item.statusLabel}
-                </span>
+                <span class={`status-badge status-badge--${item.status}`}><i class={`status-shape status-shape--${item.status}`}></i>{item.statusLabel}</span>
               </div>
               <dl>
-                <div><dt>證據</dt><dd>{item.evidence}</dd></div>
-                <div><dt>限制</dt><dd>{item.limit}</dd></div>
+                <div><dt>目前查到的證據</dt><dd>{item.evidence}</dd></div>
+                <div><dt>保護不到的地方</dt><dd>{item.limit}</dd></div>
                 <div><dt>最後驗證</dt><dd>{item.verifiedAt}</dd></div>
                 <div><dt>負責方</dt><dd>{item.owner}</dd></div>
               </dl>
             </div>
-            {item.href ? (
-              <a class="evidence-card__link" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={`查看 ${item.title} 的外部證據`}>
-                ↗
-              </a>
-            ) : (
-              <span class="evidence-card__link evidence-card__link--disabled" aria-label="尚無公開證據連結">·</span>
-            )}
+            <a class="evidence-card__link" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={`查看 ${item.title} 的證據`}>↗</a>
           </article>
         ))}
       </div>
-      <p class="evidence-note">
-        完整維護規則與 repo 證據見 <a href="https://github.com/thematters/matters-safety-guide/blob/main/docs/evidence-matrix.md" target="_blank" rel="noopener noreferrer">evidence matrix ↗</a>
-      </p>
+      <p class="evidence-note">完整維護規則與 repo 證據收在 <a href="https://github.com/thematters/matters-safety-guide/blob/main/docs/evidence-matrix.md" target="_blank" rel="noopener noreferrer">evidence matrix ↗</a></p>
     </section>
 
     <section class="incident section-shell" id="emergency" aria-labelledby="incident-title">
       <header class="section-heading">
         <p class="eyebrow">WHEN SOMETHING HAPPENS</p>
-        <h2 id="incident-title">急迫事件先保護人，再處理帳號</h2>
-        <p>若你面臨立即人身危險，先離開危險環境並聯絡可信任的人。數位排查不應增加現實風險。</p>
+        <h2 id="incident-title">真的出事時，照這個順序處理</h2>
+        <p>若有人身危險，先離開現場並聯絡可信任的人。不要為了查清楚數位問題，讓自己留在更危險的位置。</p>
       </header>
       <div class="incident-list">
         <details id="account-compromise" open>
-          <summary><span>01</span>帳號疑似遭入侵</summary>
-          <div>
-            <ol>
-              <li>從可信任的乾淨裝置開啟註冊信箱與 Matters。</li>
-              <li>先改信箱密碼，再處理平台密碼與所有既有工作階段。</li>
-              <li>保存異常登入通知、時間與變更紀錄，不要公開敏感截圖。</li>
-              <li>若無法確認入侵範圍，停止在原裝置處理並尋求協助。</li>
-            </ol>
-          </div>
+          <summary><span>01</span>帳號進不去，或資料被改了</summary>
+          <div><ol>
+            <li>換到可信任、乾淨的裝置，再開註冊信箱與 Matters。</li>
+            <li>先改信箱密碼，再處理平台密碼與仍在登入的裝置。</li>
+            <li>留下異常通知、時間與變更紀錄，截圖不要包含更多敏感資料。</li>
+            <li>看不出入侵範圍時，先停下來，改找專業支援。</li>
+          </ol></div>
         </details>
         <details id="harassment">
-          <summary><span>02</span>持續騷擾或威脅</summary>
-          <div>
-            <ol>
-              <li>保存原始網址、時間與必要截圖，避免反覆轉貼造成擴散。</li>
-              <li>檢查個人頁、舊文章與其他平台是否能拼出住處、工作或關係人。</li>
-              <li>告知可信任的人並建立固定報平安方式。</li>
-              <li>威脅涉及現實位置或暴力時，尋求在地法律與安全支援。</li>
-            </ol>
-          </div>
+          <summary><span>02</span>有人持續騷擾、威脅或追蹤</summary>
+          <div><ol>
+            <li>保留原始網址、時間與必要截圖，別為了蒐證反覆轉貼威脅內容。</li>
+            <li>回頭檢查舊文章、個人頁與其他平台，看看能不能拼出住處、工作或關係人。</li>
+            <li>告訴可信任的人，約好固定的報平安時間與失聯處理方式。</li>
+            <li>對方提到現實位置或暴力時，立刻找在地法律與人身安全支援。</li>
+          </ol></div>
         </details>
         <details id="device-monitoring">
-          <summary><span>03</span>裝置疑似被監控</summary>
-          <div>
-            <ol>
-              <li>不要立刻在疑似受監控的裝置搜尋移除方式或討論事件。</li>
-              <li>改用可信任的其他裝置與網路聯絡專業支援。</li>
-              <li>不要自行重置或刪除資料，以免破壞鑑識證據或引發對手反應。</li>
-              <li>由專業人員協助評估帳號、裝置與人身風險的處置順序。</li>
-            </ol>
-          </div>
+          <summary><span>03</span>懷疑手機或電腦被監控</summary>
+          <div><ol>
+            <li>先別用原裝置搜尋移除方式、改密碼或討論事件。</li>
+            <li>換一部可信任裝置與網路，聯絡有數位鑑識經驗的支援者。</li>
+            <li>不要急著重置或刪資料，以免破壞證據，或讓對方發現你已經察覺。</li>
+            <li>讓專業人員一起排帳號、裝置與人身風險的處理順序。</li>
+          </ol></div>
         </details>
       </div>
       <div class="incident-help">
         <div>
-          <p>帳號與平台問題可先聯絡 Matters 產品支援。高風險個案可尋求外部數位安全協助。</p>
+          <p>一般帳號與平台問題可先找 Matters。涉及監控、跨境追查或人身風險時，直接聯絡外部數位安全支援。</p>
           <a href="mailto:ask@matters.town">ask@matters.town</a>
         </div>
         <a class="ds-btn ds-btn--primary ds-btn--large" href="https://www.accessnow.org/help/" target="_blank" rel="noopener noreferrer">Access Now 24/7 數位安全熱線 ↗</a>
@@ -368,19 +409,13 @@ const description =
 
     <section class="sources section-shell" id="sources" aria-labelledby="sources-title">
       <header class="section-heading section-heading--split">
-        <div>
-          <p class="eyebrow">RESEARCH SOURCES</p>
-          <h2 id="sources-title">研究來源</h2>
-        </div>
-        <p>優先採用數位安全組織與公共機構的第一方指南。連結內容可能更新，本站每次發布都應重新核對。</p>
+        <div><p class="eyebrow">RESEARCH SOURCES</p><h2 id="sources-title">資料從哪裡來</h2></div>
+        <p>安全建議以第一方數位安全指南為主，平台主張則回到正式網站、程式碼與治理紀錄交叉核對。外部連結更新後，本站也要重新檢查。</p>
       </header>
       <div class="source-list">
         {sources.map((source, index) => (
           <a href={source.href} target="_blank" rel="noopener noreferrer">
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <strong>{source.name}</strong>
-            <p>{source.scope}</p>
-            <i aria-hidden="true">↗</i>
+            <span>{String(index + 1).padStart(2, '0')}</span><strong>{source.name}</strong><p>{source.scope}</p><i aria-hidden="true">↗</i>
           </a>
         ))}
       </div>
@@ -388,16 +423,14 @@ const description =
   </main>
 
   <footer class="site-footer" id="about">
-    <div>
-      <p class="eyebrow">MATTERS FIELD GUIDE · 001</p>
-      <h2>保護從誠實說明限制開始</h2>
-    </div>
+    <div><p class="eyebrow">MATTERS FIELD GUIDE · 001</p><h2>沒有哪個工具能包辦全部風險</h2></div>
     <div class="footer-meta">
-      <p>版本 1.1<br />最後驗證 2026-07-14<br />維護者 Matters</p>
-      <p>本站程式不使用應用層分析、不主動設定 cookie，也不保存你的清單。Cloudflare 仍可能為安全與防濫用處理請求中繼資料，並在安全挑戰時設定必要 cookie。</p>
+      <p>版本 2.0<br />最後驗證 2026-07-14<br />維護者 Matters</p>
+      <p>這份指南不使用應用層分析、不主動設定 cookie，也不保存你的清單。Cloudflare 仍會為傳輸、安全與防濫用處理請求資料，遇到安全挑戰時也可能設定必要 cookie。</p>
       <nav aria-label="頁尾連結">
         <a href="https://matters.town/tos" target="_blank" rel="noopener noreferrer">服務條款 ↗</a>
         <a href="https://github.com/thematters/matters-safety-guide" target="_blank" rel="noopener noreferrer">原始碼 ↗</a>
+        <a href="https://thematters.github.io/matters-governance-site/" target="_blank" rel="noopener noreferrer">平台清道夫 ↗</a>
         <a href="/.well-known/security.txt">安全聯絡</a>
       </nav>
     </div>

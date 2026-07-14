@@ -1,0 +1,92 @@
+---
+interface Props {
+  context: 'hero' | 'story'
+}
+
+const { context } = Astro.props
+
+const layers = [
+  {
+    id: 'device',
+    index: '01',
+    label: '裝置',
+    values: {
+      read: ['瀏覽器與本機紀錄', 'Cookie、指紋、下載與搜尋紀錄'],
+      participate: ['登入與輸入內容', '帳號狀態、剪貼簿與通知'],
+      publish: ['原稿與檔案屬性', '照片 EXIF、文件作者與修改紀錄'],
+      money: ['付款裝置與錢包', '登入狀態、地址與操作時間'],
+    },
+  },
+  {
+    id: 'network',
+    index: '02',
+    label: '連線',
+    values: {
+      read: ['IP、DNS 與時間', '網路服務商看得到連線去向'],
+      participate: ['持續連線模式', '登入時間與網路位置可能重複'],
+      publish: ['上稿時間與 IP', '發稿時刻可能對上現實行程'],
+      money: ['銀行或鏈上路徑', '交易時間、金額與公開地址'],
+    },
+  },
+  {
+    id: 'platform',
+    index: '03',
+    label: '平台',
+    values: {
+      read: ['公開頁面請求', '網站為送出內容會處理連線資料'],
+      participate: ['互動與關係網', '追蹤、留言、按讚與檢舉'],
+      publish: ['版本與發布紀錄', '帳號、文章內容與發布狀態'],
+      money: ['收付款相關紀錄', '平台與支付服務各自保存一部分'],
+    },
+  },
+  {
+    id: 'outside',
+    index: '04',
+    label: '站外',
+    values: {
+      read: ['CDN 與上游服務', 'Tor 或 VPN 只改變部分可見關係'],
+      participate: ['信箱與外部連結', '通知服務和跳轉網站另有紀錄'],
+      publish: ['IPFS、搜尋與轉貼', '公開內容可能離開原站繼續流通'],
+      money: ['支付商與公開鏈', '法定身分與化名可能在這裡接上'],
+    },
+  },
+] as const
+---
+
+<div
+  class:list={['trace-stack', `trace-stack--${context}`]}
+  data-trace-stack={context}
+  role="img"
+  aria-label="裝置、連線、平台與站外服務會各自留下一部分紀錄，並可能被重新拼接"
+>
+  <div class="trace-stack__frame">
+    <div class="trace-stack__header" aria-hidden="true">
+      <span>ACTIVE TRACE</span>
+      <strong data-trace-code>01 / 查資料</strong>
+    </div>
+
+    <div class="trace-stack__stage">
+      <div class="trace-stack__axis" aria-hidden="true">
+        <span>LOCAL</span>
+        <span>EXTERNAL</span>
+      </div>
+      {layers.map((layer) => (
+        <section class={`trace-layer trace-layer--${layer.id}`} data-trace-layer={layer.id} aria-hidden="true">
+          <p class="trace-layer__label"><span>{layer.index}</span>{layer.label}</p>
+          {Object.entries(layer.values).map(([scenario, value]) => (
+            <div data-layer-scenario={scenario} hidden={scenario !== 'read'}>
+              <strong>{value[0]}</strong>
+              <p>{value[1]}</p>
+            </div>
+          ))}
+        </section>
+      ))}
+      <div class="trace-stack__signal" aria-hidden="true"><span></span></div>
+    </div>
+
+    <div class="trace-stack__footer" aria-hidden="true">
+      <span>DEVICE → NETWORK → PLATFORM → OUTSIDE</span>
+      <span data-trace-state>VIEW / READ</span>
+    </div>
+  </div>
+</div>

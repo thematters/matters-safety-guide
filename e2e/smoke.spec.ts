@@ -5,19 +5,19 @@ test('renders the complete guide and primary landmarks', async ({ page }) => {
 
   await expect(page).toHaveTitle(/Matters 安全指南/)
   const heading = page.getByRole('heading', { level: 1 })
-  await expect(heading).toContainText('先看見')
+  await expect(heading).toContainText('一篇稿子')
   await expect(heading).toHaveCSS('opacity', '1')
   await expect(heading).toHaveCSS('visibility', 'visible')
   await expect(page.locator('[data-site-header]')).toBeVisible()
   await expect(page.locator('nav.site-nav')).toHaveCount(1)
-  await expect(page.getByRole('heading', { name: 'Matters 措施與證據' })).toBeVisible()
-  await expect(page.locator('main')).toContainText('化名不等於冒充')
-  await expect(page.locator('footer')).toContainText('Cloudflare 仍可能為安全與防濫用處理請求中繼資料')
+  await expect(page.getByRole('heading', { name: 'Matters 目前做了哪些保護' })).toBeVisible()
+  await expect(page.locator('main')).toContainText('化名能幫忙，別把它當隱身衣')
+  await expect(page.locator('.site-footer')).toContainText('Cloudflare 仍會為傳輸、安全與防濫用處理請求資料')
 })
 
 test('filters tasks without assigning a safety score or persisting state', async ({ page }) => {
   await page.goto('/#plan')
-  const publish = page.getByRole('button', { name: /發布/ })
+  const publish = page.getByRole('button', { name: /上稿/ })
 
   await publish.click()
   await expect(publish).toHaveAttribute('aria-pressed', 'true')
@@ -32,7 +32,7 @@ test('filters tasks without assigning a safety score or persisting state', async
   expect(await page.context().cookies()).toEqual([])
 
   await page.reload()
-  await expect(page.getByRole('button', { name: /發布/ })).toHaveAttribute('aria-pressed', 'false')
+  await expect(page.getByRole('button', { name: /上稿/ })).toHaveAttribute('aria-pressed', 'false')
 })
 
 test('dashboard counts remain truthful without JavaScript', async ({ browser }) => {
@@ -40,7 +40,7 @@ test('dashboard counts remain truthful without JavaScript', async ({ browser }) 
   const page = await context.newPage()
   await page.goto('/')
 
-  await expect(page.locator('[data-count]')).toHaveText(['3', '2', '1'])
+  await expect(page.locator('[data-count]')).toHaveText(['6', '2', '1'])
   await expect(page.locator('.dashboard-summary')).toContainText('已驗證')
 
   await context.close()
@@ -70,12 +70,12 @@ test('copies a local checklist with sources outside the task toggle', async ({ p
     })
   })
   await page.goto('/#plan')
-  await page.getByRole('button', { name: /閱讀/ }).click()
+  await page.getByRole('button', { name: /查資料/ }).click()
   await page.locator('[data-task-card]:visible').first().locator('label').click()
-  await page.getByRole('button', { name: '複製我的清單' }).click()
+  await page.getByRole('button', { name: '複製清單' }).click()
 
   const copied = await page.evaluate(() => (window as typeof window & { copiedPlan?: string }).copiedPlan)
-  expect(copied).toContain('使用情境　閱讀')
+  expect(copied).toContain('使用情境　查資料')
   expect(copied).toContain('☑')
   expect(copied).toContain('完成數不是安全分數')
 
