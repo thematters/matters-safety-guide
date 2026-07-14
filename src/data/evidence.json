@@ -3,7 +3,7 @@
     "title": "Matters 措施證據矩陣",
     "lastReviewed": "2026-07-14",
     "maintainer": "Matters",
-    "canonical": "https://matters-safety-guide.pages.dev/",
+    "canonical": "https://safety.matters.town/",
     "reviewIntervalDays": 90
   },
   "items": [
@@ -14,14 +14,14 @@
       "statusLabel": "已驗證",
       "verifiedAt": "2026-07-14",
       "expiresAt": "2026-10-12",
-      "evidence": "正式 Pages 網址回應 HTTP 200，並提供 TLS 與 HSTS",
+      "evidence": "正式網域回應 HTTP 200，並提供 TLS 與 HSTS",
       "limit": "保護傳輸內容，不會隱藏所有連線中繼資料。",
       "owner": "Matters infra",
       "href": "https://developers.cloudflare.com/ssl/",
       "checks": [
         {
           "kind": "command",
-          "reference": "curl -sSI https://matters-safety-guide.pages.dev/",
+          "reference": "curl -sSI https://safety.matters.town/",
           "summary": "HTTP 200，Strict-Transport-Security 啟用"
         }
       ]
@@ -52,14 +52,14 @@
       "statusLabel": "已驗證",
       "verifiedAt": "2026-07-14",
       "expiresAt": "2026-10-12",
-      "evidence": "Pages 網址的 HTTPS DNS 記錄含 ECH 設定",
+      "evidence": "正式網域的 HTTPS DNS 記錄含 ECH 設定",
       "limit": "需要瀏覽器、DNS 與網路環境支援，且不等於匿名。",
       "owner": "Matters infra",
       "href": "https://developers.cloudflare.com/ssl/edge-certificates/ech/",
       "checks": [
         {
           "kind": "command",
-          "reference": "curl -sS 'https://dns.google/resolve?name=matters-safety-guide.pages.dev&type=HTTPS' | jq -r '.Answer[].data'",
+          "reference": "curl -sS 'https://dns.google/resolve?name=safety.matters.town&type=HTTPS' | jq -r '.Answer[].data'",
           "summary": "HTTPS/SVCB 記錄含 ech 參數"
         }
       ]

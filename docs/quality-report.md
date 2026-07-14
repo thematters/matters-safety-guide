@@ -72,4 +72,4 @@ GSAP 初始化在四倍 CPU 下產生 47 ms 的一次性 layout work，沒有可
 1. CI 與 Codecov 必須綠燈
 2. Staging 與 production 必須對應 release commit
 3. `_headers`、canonical、sitemap、robots、security.txt、llms.txt 必須在線上重驗
-4. `safety.matters.town` 需完成 CNAME 與憑證後，才能切換 canonical
+4. 定期重驗 `safety.matters.town` 的憑證、HTTPS DNS 記錄與 Cloudflare Pages domain 狀態

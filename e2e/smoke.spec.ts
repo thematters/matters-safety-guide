@@ -123,7 +123,7 @@ test('the CSP permits same-origin discovery files without external connections',
   })
 
   expect(response.ok).toBe(true)
-  expect(response.text).toContain('Sitemap: https://matters-safety-guide.pages.dev/sitemap-index.xml')
+  expect(response.text).toContain('Sitemap: https://safety.matters.town/sitemap-index.xml')
 })
 
 test('publishes an agent-readable plain-text guide', async ({ request }) => {

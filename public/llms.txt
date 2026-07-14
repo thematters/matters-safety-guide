@@ -2,7 +2,7 @@
 
 > 從閱讀、互動、發布到金流，協助 Matters 使用者辨識數位足跡、建立不評分的行動清單，並查核平台措施與限制。
 
-Canonical: https://matters-safety-guide.pages.dev/
+Canonical: https://safety.matters.town/
 Language: zh-Hant-TW
 Last reviewed: 2026-07-14
 Maintainer: Matters
@@ -26,9 +26,9 @@ Maintainer: Matters
 
 ## Evidence status
 
-- HTTPS 傳輸加密 [已驗證] 正式 Pages 網址回應 HTTP 200，並提供 TLS 與 HSTS 限制 保護傳輸內容，不會隱藏所有連線中繼資料。
+- HTTPS 傳輸加密 [已驗證] 正式網域回應 HTTP 200，並提供 TLS 與 HSTS 限制 保護傳輸內容，不會隱藏所有連線中繼資料。
 - 無應用層分析追蹤 [已驗證] 本 repo 原始碼、依賴與正式 build 產物未載入分析、廣告或追蹤服務 限制 Cloudflare 仍可能為傳輸、安全與防濫用處理一般請求中繼資料。
-- Cloudflare ECH 可用性 [已驗證] Pages 網址的 HTTPS DNS 記錄含 ECH 設定 限制 需要瀏覽器、DNS 與網路環境支援，且不等於匿名。
+- Cloudflare ECH 可用性 [已驗證] 正式網域的 HTTPS DNS 記錄含 ECH 設定 限制 需要瀏覽器、DNS 與網路環境支援，且不等於匿名。
 - 去中心化發布與保存範圍 [待補證據] 公開說明提及 IPFS，尚待產品團隊確認目前發布流程、內容範圍與撤除邊界 限制 公開內容也可能被第三方截圖、轉貼或保存，去中心化保存會進一步提高撤除難度。
 - 帳號安全控制 [待補證據] 登入、重設密碼與安全 cookie 已取得 repo 證據；2FA、工作階段檢視與撤銷仍待補 限制 密碼變更或重設是否撤銷既有工作階段尚未取得證據，本指南不能代替產品內的安全控制。
 - 化名與個資政策 [政策處理中] 已建立隱私優先的政策對齊草案，正式文字等待 NCC 批次更新 限制 化名不等於冒充，也不能消除付款、裝置與操作足跡；草案尚未取代現行條款。
