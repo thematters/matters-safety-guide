@@ -8,14 +8,14 @@
 
 :root {
   --font-family-display: 'jf open 粉圓', 'PingFang TC', system-ui, sans-serif;
-  --surface-case: #110d21;
-  --surface-case-deep: #08070c;
-  --glass-surface: rgba(255, 255, 255, 0.09);
-  --glass-surface-strong: rgba(245, 243, 255, 0.16);
-  --glass-stroke: rgba(255, 255, 255, 0.28);
-  --glass-stroke-soft: rgba(255, 255, 255, 0.14);
-  --glass-shadow: rgba(0, 0, 0, 0.3);
-  --case-text-muted: #c9c3de;
+  --surface-case: color-mix(in srgb, var(--surface-strong) 86%, var(--signal-primary-dark));
+  --surface-case-deep: color-mix(in srgb, var(--surface-strong) 95%, var(--signal-primary-dark));
+  --glass-surface: color-mix(in srgb, var(--text-on-strong) 9%, transparent);
+  --glass-surface-strong: color-mix(in srgb, var(--surface-subtle) 16%, transparent);
+  --glass-stroke: color-mix(in srgb, var(--text-on-strong) 28%, transparent);
+  --glass-stroke-soft: color-mix(in srgb, var(--text-on-strong) 14%, transparent);
+  --glass-shadow: color-mix(in srgb, var(--surface-strong) 30%, transparent);
+  --case-text-muted: color-mix(in srgb, var(--text-on-strong) 76%, var(--signal-primary) 24%);
 }
 
 h1,
