@@ -12,6 +12,7 @@ test('renders the complete guide and primary landmarks', async ({ page }) => {
   await expect(page.locator('nav.site-nav')).toHaveCount(1)
   await expect(page.getByRole('heading', { name: 'Matters 措施與證據' })).toBeVisible()
   await expect(page.locator('main')).toContainText('化名不等於冒充')
+  await expect(page.locator('footer')).toContainText('Cloudflare 仍可能為安全與防濫用處理請求中繼資料')
 })
 
 test('filters tasks without assigning a safety score or persisting state', async ({ page }) => {

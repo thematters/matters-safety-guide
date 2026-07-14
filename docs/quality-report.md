@@ -40,7 +40,7 @@ GSAP 初始化在四倍 CPU 下產生 47 ms 的一次性 layout work，沒有可
 | CSS | 36 KB | 7.0 KB |
 | JavaScript including GSAP | 116 KB | 45.2 KB |
 
-首頁沒有 Hero 點陣圖片、遠端字型、第三方 script 或首次載入的跨站 request。
+repo build 沒有 Hero 點陣圖片、遠端字型、第三方 script 或主動發出的跨站 request。自訂網域的 Cloudflare Bot Fight Mode 可能針對疑似機器流量注入安全 challenge script，這項 production 行為已另列於安全審查與公開隱私說明。
 
 ## Automated tests
 
@@ -50,7 +50,7 @@ GSAP 初始化在四倍 CPU 下產生 47 ms 的一次性 layout work，沒有可
 - Playwright　17 pass，1 個 desktop 專案略過 mobile-only case
 - JavaScript 關閉時，Dashboard 顯示 3、2、1 的真實數值
 - Reduced motion　pass，沒有 pinned scroll wrapper
-- Persistence　pass，localStorage 0、sessionStorage 0、cookies 0
+- Application persistence　pass，localStorage 0、sessionStorage 0、網站程式 cookies 0；Cloudflare 安全挑戰可能另設必要 cookie
 - 清單複製與列印入口　pass
 - 行動版目錄與急迫入口　pass
 - `llms.txt` plain text　pass
