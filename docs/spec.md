@@ -7,8 +7,8 @@
 - 核准依據：專案負責人於 2026-07-13 指示「先請它產出設計方案，確認視覺方向後，再開始實作，其他都照你的意見執行，中間不要停下來，一路做到完成」
 - 核准範圍：本文件、`design-handoff.md` 與 `reference-board.md` 所述方向
 - 維護者：Matters
-- 目標網址：`https://safety.matters.town`
-- 暫用網址：`https://matters-safety-guide.pages.dev`
+- 正式網址：`https://safety.matters.town`
+- Pages 備援網址：`https://matters-safety-guide.pages.dev`
 
 ## 問題與目標
 
