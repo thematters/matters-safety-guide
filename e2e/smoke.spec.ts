@@ -118,7 +118,13 @@ test('all external new-tab links protect the opener', async ({ page }) => {
 })
 
 test('the CSP permits same-origin discovery files without external connections', async ({ page }) => {
-  await page.goto('/')
+  const pageResponse = await page.goto('/')
+
+  await expect(page.locator('script[src*="cloudflareinsights"]')).toHaveCount(0)
+
+  if (page.url().startsWith('https://')) {
+    expect(pageResponse?.headers()['cache-control']).toContain('no-transform')
+  }
 
   const response = await page.evaluate(async () => {
     const robots = await fetch('/robots.txt')
