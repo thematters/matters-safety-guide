@@ -39,7 +39,7 @@ npm run deploy:production
 
 ## 隱私
 
-網站不使用應用層分析、不設 cookie，也不把互動狀態寫入瀏覽器儲存空間或後端。Cloudflare Pages／CDN 仍可能為傳輸、安全與防濫用處理一般請求中繼資料。
+網站程式不使用應用層分析、不主動設定 cookie，也不把互動狀態寫入瀏覽器儲存空間或後端。Cloudflare Pages／CDN 仍可能為傳輸、安全與防濫用處理請求中繼資料，並在安全挑戰時設定必要 cookie。
 
 ## 文件
 

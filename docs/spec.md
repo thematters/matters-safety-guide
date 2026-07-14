@@ -138,10 +138,10 @@
 ## 隱私與安全需求
 
 - 不載入第三方分析、廣告、追蹤像素或遠端字型
-- 不使用 cookie、localStorage、sessionStorage、IndexedDB 或 service worker 保存互動資料
+- 網站程式不使用 cookie、localStorage、sessionStorage、IndexedDB 或 service worker 保存互動資料
 - 外部連結使用安全的 `rel` 屬性
 - 設定 CSP、Referrer-Policy、X-Content-Type-Options、Permissions-Policy 與 frame 防護
-- 說明 Cloudflare Pages／CDN 仍會為傳輸與防濫用處理一般請求中繼資料
+- 說明 Cloudflare Pages／CDN 仍會為傳輸與防濫用處理請求中繼資料，並可能在安全挑戰時設定必要 cookie
 - 不在 repo 或 build 產物放入 secrets
 
 ## 無障礙需求

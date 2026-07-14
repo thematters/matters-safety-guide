@@ -111,3 +111,5 @@ Cloudflare Pages 保留既有 production deployments。若 production smoke test
 本 release 已由 PR #13 從 `develop` promotion 至 `main`。promotion PR 的 CI、`codecov/project` 與 `codecov/patch` 全部通過。正式部署、smoke、headers、canonical、sitemap、robots、security.txt 與 llms.txt 驗證完成。
 
 2026-07-14 已完成 `safety.matters.town` 的 DNS、Pages domain association 與 Google Trust Services 憑證。Cloudflare API 的 domain、validation 與 verification 均為 active，正式 edge 回應 HTTP 200，憑證 SAN 包含 `safety.matters.town`。canonical、Open Graph URL、sitemap、robots.txt 與 security.txt 已切換到正式網域，Pages 網址保留為備援與 immutable deployment 紀錄。
+
+同日 production audit 確認自訂網域會沿用 `matters.town` zone 的 Bot Fight Mode。疑似機器流量可能收到 Cloudflare challenge script、challenge page 與必要安全 cookie。免費 Bot Fight Mode 無法只對子網域建立 skip rule，直接關閉則會影響整個主站，因此維持既有防護，並把頁尾、README、llms.txt、evidence matrix、SPEC 與安全審查的 cookie 說明改為應用程式層與 Cloudflare 層分開陳述。
