@@ -19,22 +19,22 @@ const description =
 const requestSteps = [
   {
     index: '01',
-    title: '先確認誰來函、要什麼',
+    title: '確認來文機關與調閱範圍',
     body: '來文機關、法律依據、帳號、資料種類與時間範圍都要寫清楚。要求太廣或說不明白，不能直接往下查。',
   },
   {
     index: '02',
-    title: '請法律顧問看管轄與比例',
+    title: '由法律顧問檢查管轄與必要性',
     body: '平台主體、後台所在地、案件性質與使用者所在國家都會影響判斷。兒少安全與一般刑事調查也不能混成同一套處理。',
   },
   {
     index: '03',
-    title: '只盤點已經保存的資料',
+    title: '盤點平台現有資料',
     body: '公文寄到之後，資料不會憑空出現。平台平常少收一項、少留一天，遇到調閱時就少一項可以交出去。',
   },
   {
     index: '04',
-    title: '把回覆與理由留下紀錄',
+    title: '記錄回覆內容與處理理由',
     body: '有資料、沒有資料、拒絕提供或立即處理，都應留下範圍與理由，之後才有辦法做透明度報告與外部檢查。',
   },
 ]
@@ -61,7 +61,7 @@ const governmentCases = [
 ]
 ---
 
-<BaseLayout title="Matters 安全指南｜一篇稿子會帶著哪些線索上線？" description={description}>
+<BaseLayout title="Matters 安全指南｜獨立記者的數位足跡與安全準備" description={description}>
   <header class="site-header" data-site-header>
     <a class="wordmark" href="#top" aria-label="Matters 安全指南首頁">
       <img class="wordmark__graph" src="/brand/matters-logo-graph.svg" alt="" />
@@ -97,7 +97,7 @@ const governmentCases = [
       <div class="hero__copy">
         <p class="eyebrow" data-hero-item>MATTERS FIELD GUIDE · FOR INDEPENDENT JOURNALISTS</p>
         <h1 id="hero-title">
-          一篇稿子，<br />會帶著哪些<br /><span>線索上線？</span>
+          獨立記者的<br /><span>數位足跡</span>
         </h1>
         <p class="hero__lead" data-hero-item>
           用化名發稿，只處理了名字。登入的信箱、裝置、連線方式、照片中繼資料與收款紀錄，仍可能把零散片段接回你身上。這份指南陪你走一遍從查資料到發稿後的路。
@@ -124,23 +124,23 @@ const governmentCases = [
     <section class="principles section-shell" id="principles" aria-labelledby="principles-title">
       <header class="section-heading">
         <p class="eyebrow">BEFORE YOU START</p>
-        <h2 id="principles-title">開始前，先把三件事說清楚</h2>
+        <h2 id="principles-title">使用化名前的三項提醒</h2>
         <p>工具能幫你少留一些線索，實際保護到哪裡，仍要看對手、工作內容與你願意付出的操作成本。</p>
       </header>
       <div class="principle-list">
         <article>
           <p class="principle-list__index">01</p>
-          <h3>化名能幫忙，別把它當隱身衣</h3>
+          <h3>換了名字，其他身分線索還在</h3>
           <p>名稱換掉之後，信箱、頭像、活動時間、寫作習慣與收款方式還在。只要其中幾項被重複使用，身分就有機會被接起來。</p>
         </article>
         <article>
           <p class="principle-list__index">02</p>
-          <h3>每多用一個服務，就多一份紀錄</h3>
+          <h3>不同服務會留下不同紀錄</h3>
           <p>瀏覽器、網路服務商、平台、支付商與公開鏈看到的內容不同。先畫出資料經過誰，再決定哪一段需要換工具。</p>
         </article>
         <article>
           <p class="principle-list__index">03</p>
-          <h3>發出去的內容，很難全數收回</h3>
+          <h3>公開內容往往無法全數收回</h3>
           <p>搜尋引擎、讀者備份、截圖與 IPFS 都可能留下副本。抗刪除對新聞保存很重要，對更正、撤回與來源保護也會帶來代價。</p>
         </article>
       </div>
@@ -149,7 +149,7 @@ const governmentCases = [
     <section class="trace-story" id="trace" aria-labelledby="trace-title" data-trace-story>
       <header class="section-heading section-shell">
         <p class="eyebrow">ACTIVE TRACE</p>
-        <h2 id="trace-title">從查資料到收款，每一步都會留下不同紀錄</h2>
+        <h2 id="trace-title">採訪、發稿與收款留下的紀錄</h2>
         <p>往下看四段工作情境。右邊的資料層會跟著切換，讓你看見同一個動作可能同時落在哪幾個地方。</p>
       </header>
 
@@ -186,10 +186,10 @@ const governmentCases = [
 
     <section class="platform-requests" id="platform-requests" aria-labelledby="platform-requests-title">
       <div class="section-shell">
-        <header class="section-heading section-heading--light section-heading--split">
+        <header class="section-heading section-heading--split">
           <div>
             <p class="eyebrow">FROM THE PLATFORM SIDE</p>
-            <h2 id="platform-requests-title">政府來函寄到平台後，會發生什麼</h2>
+            <h2 id="platform-requests-title">政府資料調閱公文的<br />平台處理流程</h2>
           </div>
           <p>來函只是一個起點。平台平常收了多少、留了多久，才決定手上有多少資料能被調閱。</p>
         </header>
@@ -216,7 +216,7 @@ const governmentCases = [
         <div class="case-file">
           <div class="case-file__intro">
             <p class="eyebrow">CASE FILE · SELF-REPORTED</p>
-            <h3>治理資料裡記下的三次來函</h3>
+            <h3>三次政府調閱資料紀錄</h3>
             <p>以下是 Matters 公開治理資料整理出的歷史紀錄。它們能說明過去發生過什麼，不能當成法律意見，也不能保證未來每一案都會用相同方式處理。</p>
             <a href="https://thematters.github.io/matters-governance-site/reading/platform-meets-law/" target="_blank" rel="noopener noreferrer">查看〈平台遇上法律〉全文 ↗</a>
           </div>
@@ -237,7 +237,7 @@ const governmentCases = [
       <header class="section-heading section-heading--split">
         <div>
           <p class="eyebrow">YOUR FIELD NOTES</p>
-          <h2 id="plan-title">把今天要做的事勾出來</h2>
+          <h2 id="plan-title">依採訪情境<br />整理安全清單</h2>
         </div>
         <p>清單只在目前頁面運作，不會保存或送出。你可以複選工作情境，再把結果複製或列印下來。</p>
       </header>
@@ -300,7 +300,7 @@ const governmentCases = [
       <header class="section-heading section-heading--split">
         <div>
           <p class="eyebrow">WHAT MATTERS DOES</p>
-          <h2 id="evidence-title">Matters 目前做了哪些保護</h2>
+          <h2 id="evidence-title">Matters 目前提供的隱私與備份措施</h2>
         </div>
         <p>每一項都同時寫出證據與保護不到的地方。查不到的部分會留在「待補證據」，不拿推測補空白。</p>
       </header>
@@ -366,7 +366,7 @@ const governmentCases = [
     <section class="incident section-shell" id="emergency" aria-labelledby="incident-title">
       <header class="section-heading">
         <p class="eyebrow">WHEN SOMETHING HAPPENS</p>
-        <h2 id="incident-title">真的出事時，照這個順序處理</h2>
+        <h2 id="incident-title">帳號、騷擾與裝置事件的處理順序</h2>
         <p>若有人身危險，先離開現場並聯絡可信任的人。不要為了查清楚數位問題，讓自己留在更危險的位置。</p>
       </header>
       <div class="incident-list">
@@ -409,7 +409,7 @@ const governmentCases = [
 
     <section class="sources section-shell" id="sources" aria-labelledby="sources-title">
       <header class="section-heading section-heading--split">
-        <div><p class="eyebrow">RESEARCH SOURCES</p><h2 id="sources-title">資料從哪裡來</h2></div>
+        <div><p class="eyebrow">RESEARCH SOURCES</p><h2 id="sources-title">本指南的參考資料</h2></div>
         <p>安全建議以第一方數位安全指南為主，平台主張則回到正式網站、程式碼與治理紀錄交叉核對。外部連結更新後，本站也要重新檢查。</p>
       </header>
       <div class="source-list">
@@ -423,7 +423,7 @@ const governmentCases = [
   </main>
 
   <footer class="site-footer" id="about">
-    <div><p class="eyebrow">MATTERS FIELD GUIDE · 001</p><h2>沒有哪個工具能包辦全部風險</h2></div>
+    <div><p class="eyebrow">MATTERS FIELD GUIDE · 001</p><h2>依工作情境<br />調整安全措施</h2></div>
     <div class="footer-meta">
       <p>版本 2.0<br />最後驗證 2026-07-14<br />維護者 Matters</p>
       <p>這份指南不使用應用層分析、不主動設定 cookie，也不保存你的清單。Cloudflare 仍會為傳輸、安全與防濫用處理請求資料，遇到安全挑戰時也可能設定必要 cookie。</p>
